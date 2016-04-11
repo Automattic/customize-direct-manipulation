@@ -1,0 +1,214 @@
+import resetMarkup from './mock-window';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import chai from 'chai';
+import getJQuery from '../src/helpers/jquery';
+import { positionIcon } from '../src/helpers/icon-buttons';
+
+chai.use( sinonChai );
+const expect = chai.expect;
+const $ = getJQuery();
+
+describe( 'positionIcon()', function() {
+	afterEach( function() {
+		resetMarkup();
+	} );
+
+	it( 'returns the element it was passed if the target element cannot be found', function() {
+		const element = {
+			id: 'test',
+			selector: '.does-not-exist',
+			type: 'testType',
+		};
+		expect( positionIcon( element ) ).to.equal( element );
+	} );
+
+	it( 'returns a copy of the element it was passed if the target element is found', function() {
+		const element = {
+			id: 'test',
+			selector: '.site-title',
+			type: 'testType',
+		};
+		const actual = positionIcon( element );
+		expect( actual ).to.not.equal( element );
+		expect( actual ).to.contain.all.keys( Object.keys( element ) );
+	} );
+
+	it( 'returns an element with cached target and icon parameters if the target element is found', function() {
+		const element = {
+			id: 'test',
+			selector: '.site-title',
+			type: 'testType',
+		};
+		expect( positionIcon( element ) ).to.contain.all.keys( [ '$target', '$icon' ] );
+	} );
+
+	describe( 'when creating the icon button', function() {
+		it( 'does not create an icon button if the target element cannot be found', function() {
+			const element = {
+				id: 'test',
+				selector: '.does-not-exist',
+				type: 'testType',
+			};
+			positionIcon( element );
+			expect( $( '.cdm-icon__test' ) ).to.have.length( 0 );
+		} );
+
+		it( 'creates an icon button if the target element can be found', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+			};
+			positionIcon( element );
+			expect( $( '.cdm-icon__test' ) ).to.have.length( 1 );
+		} );
+
+		it( 'does not create duplicate icon buttons when run twice', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+			};
+			const newElement = positionIcon( element );
+			positionIcon( newElement );
+			expect( $( '.cdm-icon__test' ) ).to.have.length( 1 );
+		} );
+
+		it( 'creates an icon button with the `cdm-icon` class', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+			};
+			positionIcon( element );
+			expect( $( '.cdm-icon__test' ).hasClass( 'cdm-icon' ) ).to.be.true;
+		} );
+
+		it( 'creates an icon button with the `cdm-icon--text` class for most element types', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+			};
+			positionIcon( element );
+			const $el = $( '.cdm-icon__test' );
+			expect( $el.hasClass( 'cdm-icon--text' ) ).to.be.true;
+			expect( $el.hasClass( 'cdm-icon--header-image' ) ).to.be.false;
+		} );
+
+		it( 'creates an icon button with the `cdm-icon--header-image` class for the `headerIcon` icon image', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				icon: 'headerIcon',
+			};
+			positionIcon( element );
+			const $el = $( '.cdm-icon__test' );
+			expect( $el.hasClass( 'cdm-icon--text' ) ).to.be.false;
+			expect( $el.hasClass( 'cdm-icon--header-image' ) ).to.be.true;
+		} );
+	} );
+
+	describe( 'when positioning the icon button', function() {
+		let mockTarget = null;
+		let mockIcon = null;
+		let cssSpy = null;
+
+		beforeEach( function() {
+			// Mock target element because jsdom has no positioning
+			mockTarget = $( '.site-title' );
+			mockTarget.offset = () => ( { top: 100, left: 100 } );
+			mockTarget.innerHeight = () => 40;
+			mockTarget.width = () => 200;
+
+			// Mock icon because jsdom has no positioning
+			// Use a random page element as the 'icon' for this test so we don't have to add it
+			mockIcon = $( '.site-description' );
+			mockIcon.innerHeight = () => 18;
+			cssSpy = sinon.spy();
+			mockIcon.css = cssSpy;
+		} );
+
+		it( 'positions the icon off-screen when the target element is hidden', function() {
+			mockTarget.is = prop => ( prop !== ':visible' );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+		} );
+
+		it( 'positions the icon at the top-left of the target', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 100 } );
+		} );
+
+		it( 'positions the icon at the left edge of the viewport if it would be off the left side', function() {
+			// Note that jsdom makes the viewport width = 1024
+			mockTarget.offset = () => ( { top: 100, left: 10 } );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 35 } );
+		} );
+
+		it( 'positions the icon at the left middle of the target if the position is `middle`', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				position: 'middle',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { top: 111, left: 100 } );
+		} );
+
+		it( 'positions the icon at the top-right of the target if the position is `top-right`', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				position: 'top-right',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 370 } );
+		} );
+
+		it( 'positions the icon at the right edge of the viewport if it would be off the right side', function() {
+			// Note that jsdom makes the viewport width = 1024
+			mockTarget.width = () => 1200;
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				position: 'top-right',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 914 } );
+		} );
+	} );
+} );

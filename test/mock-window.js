@@ -1,0 +1,45 @@
+/**
+ * Usage:
+ * Simply importing this file will mock the window object and all dependencies
+ * for this project.
+ */
+
+import getWindow, { setWindow } from '../src/helpers/window';
+import mockHtml from './mock-html';
+
+/**
+ * Reset the markup in the DOM to the initial state
+ */
+export default function resetMarkup() {
+	getWindow().jQuery( getWindow().document.body ).html( mockHtml );
+}
+
+/**
+ * Mock the window object
+ *
+ * @param {string} html - The html to use for the DOM
+ * @return {Object} The window object
+ */
+function getMockWindow( html ) {
+	const jsdom = require( 'jsdom' ).jsdom( html );
+	return jsdom.defaultView;
+}
+
+function mockjQuery( mockWindow ) {
+	mockWindow.jQuery = require( 'jquery' )( mockWindow );
+}
+
+function mockUnderscore( mockWindow ) {
+	mockWindow._ = require( 'underscore' );
+}
+
+function mockCustomizer( mockWindow ) {
+	// TODO add customizer functions and bootstrap data to mockWindow
+	mockWindow.wp = { customize: {} };
+}
+
+const mockWindow = getMockWindow( mockHtml );
+mockjQuery( mockWindow );
+mockUnderscore( mockWindow );
+mockCustomizer( mockWindow );
+setWindow( mockWindow );
