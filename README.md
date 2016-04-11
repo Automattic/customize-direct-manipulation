@@ -21,3 +21,5 @@ A WordPress plugin that adds small icons to the customizer preview that open the
 # Testing
 
 Run `npm install` and then `npm test` to run the test suite.
+
+[![Circle CI](https://circleci.com/gh/Automattic/customize-direct-manipulation.svg?style=svg)](https://circleci.com/gh/Automattic/customize-direct-manipulation)
