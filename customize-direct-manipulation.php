@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Customize Direct Manipulation
-Plugin URI: http://automattic.com/
-Description: Click to edit in the Customizer
+Plugin URI: https://github.com/Automattic/customize-direct-manipulation
+Description: Click-to-edit in the Customizer
 Author: Automattic
 Author URI: http://automattic.com/
 Version: 1.0.0
