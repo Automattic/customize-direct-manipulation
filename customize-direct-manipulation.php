@@ -106,19 +106,19 @@ class Jetpack_Customizer_DM {
 	}
 
 	public function admin_enqueue() {
-		wp_enqueue_script( 'customizer-dm-admin', plugins_url( 'js/customizer-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20150914', true );
-		wp_enqueue_style( 'customizer-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
+		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
+		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
 	}
 
 	public function preview_enqueue() {
-		wp_enqueue_style( 'customizer-dm-preview', plugins_url( 'css/customize-direct-manipulation.css', __FILE__ ), array(), '20150922' );
-		wp_enqueue_script( 'customizer-dm-preview', plugins_url( 'js/customizer-dm-preview.js', __FILE__ ), array( 'jquery' ), '20150914', true );
+		wp_enqueue_style( 'customize-dm-preview', plugins_url( 'css/customize-direct-manipulation.css', __FILE__ ), array(), '20160411' );
+		wp_enqueue_script( 'customize-dm-preview', plugins_url( 'js/customize-dm-preview.js', __FILE__ ), array( 'jquery' ), '20160411', true );
 		add_action( 'wp_footer', array( $this, 'add_script_data_in_footer' ) );
 		add_filter( 'widget_links_args', array( $this, 'fix_widget_links' ) );
 	}
 
 	public function add_script_data_in_footer() {
-		wp_localize_script( 'customizer-dm-preview', '_Customizer_DM', array(
+		wp_localize_script( 'customize-dm-preview', '_Customizer_DM', array(
 			'menus' => $this->get_menu_data(),
 			'headerImageSupport' => current_theme_supports( 'custom-header' )
 		) );
