@@ -36,5 +36,5 @@ function getModifiedSelectors() {
 		'img.headerimage',
 		'img.custom-header',
 		'.featured-header-image a img'
-	].map( selector => selector + '[src]:not(\'.site-logo\'):not(\'.wp-post-image\')' ).join();
+	].map( selector => selector + '[src]:not(\'.site-logo\'):not(\'.wp-post-image\'):not(\'.custom-logo\')' ).join();
 }
