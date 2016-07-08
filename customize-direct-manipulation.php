@@ -108,6 +108,28 @@ class Jetpack_Customizer_DM {
 	public function admin_enqueue() {
 		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
 		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
+
+		$steps = array(
+			array(
+				'title' => __( 'Welcome to the Customizer' ),
+				'content' => __( 'Change settings in this panel' ),
+				'button' => __( 'Next' ),
+				'pointTo' => '#customize-controls'
+			),
+			array(
+				'title' => __( 'Welcome to the Customizer' ),
+				'content' => __( 'As you change things, this preview will update' ),
+				'button' => __( 'Next' ),
+				'pointTo' => '#customize-preview'
+			),
+			array(
+				'title' => __( 'Welcome to the Customizer' ),
+				'content' => __( 'Many things will have an icon.' ),
+				'button' => __( 'Done' ),
+				'pointTo' => '#customize-preview'
+			)
+		);
+		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps' ) );
 	}
 
 	public function preview_enqueue() {
