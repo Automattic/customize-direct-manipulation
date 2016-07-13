@@ -4,6 +4,7 @@ import { off, send } from './helpers/messenger';
 import addFocusListener from './modules/focus-listener';
 import { bindPreviewEventsListener } from './helpers/record-event';
 import addGuide from './modules/guide';
+import getOpts from './helpers/options';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:admin' );
@@ -28,6 +29,8 @@ api.bind( 'ready', () => {
 
 	bindPreviewEventsListener();
 
-	// Show 'em around the place
-	addGuide();
+	// Show 'em around the place the first time
+	if ( getOpts().showGuide ) {
+		addGuide();
+	}
 } );

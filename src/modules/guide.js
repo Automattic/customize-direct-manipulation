@@ -10,6 +10,8 @@ function showGuide() {
 	if ( supportsAnimation() ) {
 		animateWithClass( '#dmguide-overlay', 'entering' );
 	}
+
+	recordEvent( 'wpcom_customize_guide_show' );
 }
 
 function addEvents() {
@@ -21,7 +23,7 @@ function addEvents() {
 function dismiss() {
 	removeGuide();
 	getJQ()( document ).off( '.dmguide' );
-	recordEvent( 'wpcom_nux_dmguide_dismiss' );
+	recordEvent( 'wpcom_customize_guide_dismiss' );
 }
 
 function removeGuide() {

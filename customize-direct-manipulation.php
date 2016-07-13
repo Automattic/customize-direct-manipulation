@@ -105,6 +105,28 @@ class Jetpack_Customizer_DM {
 		return $menus;
 	}
 
+	private function should_show_guide() {
+		// a8c testing
+		if ( is_automattician() && isset( $_GET['guide'] ) ) {
+			return true;
+		}
+		// Only to newer users
+		$this_user_id = (int) get_current_user_id();
+		$minimum_user_id = 99855465;
+		if ( $this_user_id < $minimum_user_id ) {
+			return false;
+		}
+
+		// check the attribute set when shown
+		if ( get_user_attribute( $this_user_id, 'customizer-guide-shown' ) ) {
+			return false;
+		}
+
+		// we can show it, but just this once
+		update_user_attribute( $this_user_id, 'customizer-guide-shown', 1 );
+		return true;
+	}
+
 	public function admin_enqueue() {
 		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
 		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
@@ -116,7 +138,9 @@ class Jetpack_Customizer_DM {
 				'button' => __( 'Thanks, got it!' )
 			),
 		);
-		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps' ) );
+
+		$showGuide = $this->should_show_guide();
+		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps', 'showGuide' ) );
 	}
 
 	public function preview_enqueue() {
