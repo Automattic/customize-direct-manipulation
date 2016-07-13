@@ -48,7 +48,7 @@
 }
 
 #dmguide-overlay {
-	background-color: rgba(0, 0, 0, .5);
+	background-color: rgba(255,255,255,.25);
 	display: block;
 	position: fixed;
 		top: 0;
@@ -59,59 +59,42 @@
 }
 
 #dmguide {
-	background-color: #fff;
-	border: 1px solid #c8d7e1;
-	border-radius: 3px;
-	box-shadow: 3px 1px 5px -2px rgba(0,0,0,0.145);
-	color: #668eaa;
-	cursor: pointer;
+	background-color: #151e25;
+	border-radius: 5px;
+	box-shadow: 3px 1px 10px -2px rgba(0,0,0,.5);
 	font-size: 14px;
 	margin: 0 12px 0 0;
 	position: fixed;
-		top: 44px;
-		left: 325px;
+		top: 97px;
+		left: 305px;
 		z-index: 999999998;
 	text-align: left;
+	width: 410px;
 }
-#trampoline.dmguide-moving {
+#dmguide::after {
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 16px 16px 16px 0;
+	border-color: transparent #151e25 transparent transparent;
+	position: absolute;
+	top: 16px;
+	left: -16px;
+}
+#dmguide.dmguide-moving {
 	transition-duration: 250ms;
 	transition-property: transform;
 	transition-timing-function: cubic-bezier(.84,.45,.68,1.44);
 }
 
-#trampoline .arrow-wrapper {
-	border-right: 1px solid #c8d7e1;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	position: absolute;
-		top: 0;
-		left: 0;
-	width: 50px;
-	height: 100%;
-	-webkit-align-items: center;
-	-ms-flex-align: center;
-	align-items: center;
-	-webkit-justify-content: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-}
-
-#trampoline .gridicon {
-	fill: #668eaa;
-}
-
-.rtl #trampoline .gridicon {
-	transform: scaleX(-1);
-}
-
-.entering #trampoline {
+.entering #dmguide {
 	-webkit-animation: bounceInLeft .5s ease-in-out 1 .25s;
 	animation: bounceInLeft .5s ease-in-out 1 .25s;
 	-webkit-transform: translate3d(100vw, 0, 0);
 	transform: translate3d(100vw, 0, 0);
 }
-.exiting #trampoline {
+.exiting #dmguide {
 	-webkit-animation: bounceOutRight .66s ease-in-out 1;
 	animation: bounceOutRight .66s ease-in-out 1;
 }
@@ -119,8 +102,11 @@
 #dmguide-text {
 	display: inline-block;
 	line-height: 1.6;
-	padding: 10px 20px 10px 70px;
+	padding: 1.5em 2em;
 	vertical-align: bottom;
+	color: #fff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 #dmguide-text b::before {
 	content: ' ';
@@ -134,7 +120,7 @@
 	margin-right: 2px;
 }
 
-#trampoline h2 {
+#dmguide h2 {
 	color: #2e4453;
 	font-size: 20px;
 	line-height: 1.6;
@@ -145,59 +131,46 @@
 }
 #dmguide-text,
 #dmguide-header,
-#trampoline .dmguide-button {
+#dmguide .dmguide-button {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
 }
 
-
-@media screen and ( max-width: 782px ) {
-	.entering #trampoline {
+@media screen and ( max-width: 730px ) {
+	#dmguide {
+		width: auto;
+		right: 1em;
+	}
+}
+@media screen and ( max-width: 640px ) {
+	.entering #dmguide {
 		-webkit-animation: bounceInDown .66s ease-in-out 1 .25s;
 		animation: bounceInDown .66s ease-in-out 1 .25s;
 		-webkit-transform: translate3d(0, -3000px, 0);
 		transform: translate3d(0, -3000px, 0);
 	}
-	.exiting #trampoline {
+	.exiting #dmguide {
 		-webkit-animation: bounceOutUp .66s ease-in-out 1;
 		animation: bounceOutUp .66s ease-in-out 1;
 	}
-	#trampoline {
-		margin: 0;
-		top: 50px;
-		left: 5px;
-		right: 5px;
+	#dmguide {
+		top: 60px;
+		left: 10px;
+		right: 0;
 	}
-	#trampoline .arrow-wrapper {
-		border-right: 0 none;
-		border-bottom: 1px solid #c8d7e1;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
-		padding: 0 20px;
-		position: relative;
-		width: 100%;
-		height: 50px;
-		-webkit-align-items: center;
-		-ms-flex-align: center;
-		align-items: center;
-		-webkit-justify-content: flex-start;
-		-ms-flex-pack: flex-start;
-		justify-content: flex-start;
-	}
-	#trampoline .gridicons-arrow {
-		-webkit-transform: rotate(90deg);
-		-moz-transform: rotate(90deg);
-		-o-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		transform: rotate(90deg);
-		position: absolute;
-		top: 7px;
-		left: 4px;
+	#dmguide::after {
+		display: none;
 	}
 	#dmguide-text {
-		line-height: 21px;
+		line-height: 22px;
 		display: block;
-		padding: 10px 20px;
+		padding: 20px;
+	}
+	.dmguide-button-wrap {
+		margin-top: 20px;
+	}
+	.dmguide-button-primary {
+		text-align: center;
+		width: 100%;
 	}
 }
 
@@ -431,7 +404,7 @@
 }
 
 .dmguide-button.dmguide-button-primary {
-  background: #00aadc;
+  background: #1cabda;
   border-color: #0087be;
   color: white;
 }

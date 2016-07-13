@@ -3,7 +3,7 @@ import getJQuery from './helpers/jquery';
 import { off, send } from './helpers/messenger';
 import addFocusListener from './modules/focus-listener';
 import { bindPreviewEventsListener } from './helpers/record-event';
-import { addGuideToPage } from './modules/guide';
+import addGuide from './modules/guide';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:admin' );
@@ -29,5 +29,5 @@ api.bind( 'ready', () => {
 	bindPreviewEventsListener();
 
 	// Show 'em around the place
-	addGuideToPage();
+	addGuide();
 } );

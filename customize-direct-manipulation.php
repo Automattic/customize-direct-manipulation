@@ -111,23 +111,10 @@ class Jetpack_Customizer_DM {
 
 		$steps = array(
 			array(
-				'title' => __( 'Welcome to the Customizer' ),
-				'content' => __( 'Change settings in this panel' ),
-				'button' => __( 'Next' ),
-				'pointTo' => '#customize-controls'
+				'content' => __( 'Here you can control the design of your site. Change your site name, update the colors and fonts, and even add a header image. Explore widgets to find new features and content to add to your website.' ),
+				'smallContent' => __( 'Click the <strong>Preview</strong> icon to preview your site appearance before saving.' ),
+				'button' => __( 'Thanks, got it!' )
 			),
-			array(
-				'title' => __( 'Welcome to the Customizer' ),
-				'content' => __( 'As you change things, this preview will update' ),
-				'button' => __( 'Next' ),
-				'pointTo' => '#customize-preview'
-			),
-			array(
-				'title' => __( 'Welcome to the Customizer' ),
-				'content' => __( 'Many things will have an icon.' ),
-				'button' => __( 'Done' ),
-				'pointTo' => '#customize-preview'
-			)
 		);
 		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps' ) );
 	}

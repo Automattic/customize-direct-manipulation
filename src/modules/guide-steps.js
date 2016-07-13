@@ -1,8 +1,8 @@
 import getOptions from '../helpers/options';
 
-const arrow = '';
-
 let currentStep = 1;
+
+const smallScreenWidth = 640;
 
 export function nextStep() {
 	currentStep++;
@@ -30,7 +30,6 @@ function getCurrentStep() {
 
 export function getHtml() {
 	return `<div id="dmguide-overlay"><div id="dmguide">
-	<div class="arrow-wrapper">${arrow}</div>
 	<div class="dmguide-step">${getStepHtml()}</div>
 	</div></div>`;
 }
@@ -46,6 +45,10 @@ export function getStepHtml() {
 
 	if ( stepData.content ) {
 		html += stepData.content;
+	}
+
+	if ( stepData.smallContent && matchMedia && matchMedia( `screen and (max-width:${smallScreenWidth}px)` ).matches ) {
+		html += ' ' + stepData.smallContent;
 	}
 
 	html += getButtons();
