@@ -3,6 +3,8 @@ import getJQuery from './helpers/jquery';
 import { off, send } from './helpers/messenger';
 import addFocusListener from './modules/focus-listener';
 import { bindPreviewEventsListener } from './helpers/record-event';
+import addGuide from './modules/guide';
+import getOpts from './helpers/options';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:admin' );
@@ -26,4 +28,9 @@ api.bind( 'ready', () => {
 	$( '.collapse-sidebar' ).on( 'click', () => send( 'cdm-toggle-visible' ) );
 
 	bindPreviewEventsListener();
+
+	// Show 'em around the place the first time
+	if ( getOpts().showGuide ) {
+		addGuide();
+	}
 } );

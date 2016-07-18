@@ -105,9 +105,42 @@ class Jetpack_Customizer_DM {
 		return $menus;
 	}
 
+	private function should_show_guide() {
+		// a8c testing
+		if ( is_automattician() && isset( $_GET['guide'] ) ) {
+			return true;
+		}
+		// Only to newer users
+		$this_user_id = (int) get_current_user_id();
+		$minimum_user_id = 99855465;
+		if ( $this_user_id < $minimum_user_id ) {
+			return false;
+		}
+
+		// check the attribute set when shown
+		if ( get_user_attribute( $this_user_id, 'customizer-guide-shown' ) ) {
+			return false;
+		}
+
+		// we can show it, but just this once
+		update_user_attribute( $this_user_id, 'customizer-guide-shown', 1 );
+		return true;
+	}
+
 	public function admin_enqueue() {
 		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
 		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
+
+		$steps = array(
+			array(
+				'content' => __( 'Here you can control the design of your site. Change your site name, update the colors and fonts, and even add a header image. Explore widgets to find new features and content to add to your website.' ),
+				'smallContent' => __( 'Click the <strong>Preview</strong> icon to preview your site appearance before saving.' ),
+				'button' => __( 'Thanks, got it!' )
+			),
+		);
+
+		$showGuide = $this->should_show_guide();
+		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps', 'showGuide' ) );
 	}
 
 	public function preview_enqueue() {
