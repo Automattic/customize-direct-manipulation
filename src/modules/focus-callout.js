@@ -25,6 +25,14 @@ function addCallout( section, type ) {
 		}
 	}
 
+	// Highlight widget
+	if ( section && section.container && type === 'widget' ) {
+		debug ( 'highlighting widget container' );
+		callout( section.container );
+		// focus the first input, not the stupid toggle
+		return section.container.find( ':input' ).not( 'button' ).first().focus()
+	}
+
 	// Highlight whatever is focused
 	const focused = $( ':focus' );
 	if ( focused.length ) {
