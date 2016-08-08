@@ -27,6 +27,13 @@ api.bind( 'ready', () => {
 	// Toggle icons when customizer toggles preview mode
 	$( '.collapse-sidebar' ).on( 'click', () => send( 'cdm-toggle-visible' ) );
 
+	// Make the site title clickable
+	$( '.customize-info .site-title' ).on( 'click', () => {
+		if (api.previewer) {
+			api.previewer.trigger( 'control-focus', 'blogname' );
+		}
+	} );
+
 	bindPreviewEventsListener();
 
 	// Show 'em around the place the first time
