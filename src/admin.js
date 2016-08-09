@@ -29,7 +29,7 @@ api.bind( 'ready', () => {
 
 	// Make the site title clickable
 	$( '.customize-info .site-title' ).on( 'click', () => {
-		if (api.previewer) {
+		if ( api.previewer ) {
 			api.previewer.trigger( 'control-focus', 'blogname' );
 		}
 	} );
