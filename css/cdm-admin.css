@@ -431,3 +431,7 @@
 	-webkit-transform-origin: center bottom;
 	transform-origin: center bottom;
 }
+
+#customize-info .site-title {
+	cursor: pointer;
+}
