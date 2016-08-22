@@ -107,7 +107,7 @@ class Jetpack_Customizer_DM {
 
 	private function should_show_guide() {
 		// a8c testing
-		if ( is_automattician() && isset( $_GET['guide'] ) ) {
+		if ( function_exists( 'is_automattician' ) && is_automattician() && isset( $_GET['guide'] ) ) {
 			return true;
 		}
 		// Only to newer users
