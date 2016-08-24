@@ -54,6 +54,15 @@ class Jetpack_Customizer_DM {
 		add_filter( 'customize_widget_partial_refreshable', '__return_true', 20 );
 		add_filter( 'wp_page_menu_args', array( $this, 'maybe_add_page_menu_class' ) );
 		add_filter( 'wp_nav_menu_args', array( $this, 'make_nav_menus_discoverable' ) );
+
+		// Only Support certain theme / site types and blogs on business plan
+		// See plugins/footer-credit/customizer.php
+		if ( ! wpcom_is_vip_theme() && ! is_automattic() && ! wpcom_is_a8c_theme() ) {
+			$plan = WPCOM_Store::get_subscribed_bundle_product_id_for_blog();
+			if ( in_array( $plan, array( WPCOM_BUSINESS_BUNDLE ) ) ) {
+				add_filter( 'wpcom_better_footer_credit_link', array( $this, 'make_footer_credit_discoverable' ), 11, 1 );
+			}
+		}
 	}
 
 	public function make_nav_menus_discoverable( $args ) {
@@ -166,6 +175,14 @@ class Jetpack_Customizer_DM {
 		}
 		$args['menu_class'] .= " cdm-fallback-menu cdm-menu-location-{$args['theme_location']}";
 		return $args;
+	}
+
+	public function make_footer_credit_discoverable( $link ) {
+		$credit_link_regex = '#(<a)([^>]*href="https?://(?:www\.)?wordpress\.(?:com|org)[^"]*"[^>]*>)#i';
+
+		$link = preg_replace( $credit_link_regex, '$1 data-type="cdm-footer-credit-link"$2', $link );
+
+		return $link;
 	}
 
 	/**
