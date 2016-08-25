@@ -8,7 +8,7 @@ export function getFooterElements() {
 	return [
 		{
 			id: 'footercredit',
-			selector: 'a[data-type="cdm-footer-credit-link"]',
+			selector: 'a[data-type="footer-credit"]',
 			type: 'footer',
 			position: 'middle'
 		}
