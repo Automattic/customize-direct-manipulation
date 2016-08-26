@@ -1,9 +1,3 @@
-import getJQuery from '../helpers/jquery';
-import debugFactory from 'debug';
-
-const debug = debugFactory( 'cdm:footer-focus' );
-const $ = getJQuery();
-
 export function getFooterElements() {
 	return [
 		{
