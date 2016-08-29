@@ -9,7 +9,7 @@ const eventMap = {
 	'focus-widget-control': 'widget',
 	'focus-menu': 'menu',
 	'focus-menu-location': 'menu'
-}
+};
 
 export default function addFocusListener( eventName, getControlCallback ) {
 	on( eventName, makeHandler( eventName, getControlCallback ) );
@@ -17,7 +17,7 @@ export default function addFocusListener( eventName, getControlCallback ) {
 
 function makeHandler( eventName, getControlCallback ) {
 	return function( ...args ) {
-		const eventTargetId = args[0];
+		const eventTargetId = args[ 0 ];
 		debug( `received ${eventName} event for target id ${eventTargetId}` );
 		const focusableControl = getControlCallback.apply( getControlCallback, args );
 		if ( ! focusableControl ) {
@@ -35,7 +35,7 @@ function makeHandler( eventName, getControlCallback ) {
 		}
 
 		focusCallout( focusableControl, type );
-	}
+	};
 }
 
 function getEventType( eventName, eventTargetId ) {

@@ -17,5 +17,5 @@ export function getMenuElements() {
 function makeHandler( id ) {
 	return function() {
 		send( 'focus-menu', id );
-	}
+	};
 }

@@ -59,6 +59,9 @@ function startIconMonitor( elements ) {
 	// Reposition icons after any theme fonts load
 	repositionAfterFontsLoad( elements );
 
+	// Reposition icons after a few seconds just in case (eg: infinite scroll or other scripts complete)
+	setTimeout( makeRepositioner( elements, 'follow-up' ), 2000 );
+
 	// Reposition icons after the window is resized
 	$( getWindow() ).resize( makeRepositioner( elements, 'resize' ) );
 
@@ -87,9 +90,9 @@ function startIconMonitor( elements ) {
 	$document.on( 'click', makeRepositioner( elements, 'click' ) );
 
 	// Reposition after any page changes (if the browser supports it)
-	var page = getWindow().document.querySelector( '#page' );
+	const page = getWindow().document.querySelector( '#page' );
 	if ( page && MutationObserver ) {
-		var observer = new MutationObserver( makeRepositioner( elements, 'DOM mutation' ) );
+		const observer = new MutationObserver( makeRepositioner( elements, 'DOM mutation' ) );
 		observer.observe( page, { attributes: true, childList: true, characterData: true } );
 	}
 }
@@ -113,5 +116,5 @@ function makeDefaultHandler( id ) {
 		event.stopPropagation();
 		debug( 'click detected on', id );
 		send( 'control-focus', id );
-	}
+	};
 }

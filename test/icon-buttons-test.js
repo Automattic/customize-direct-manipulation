@@ -144,6 +144,32 @@ describe( 'positionIcon()', function() {
 			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
 		} );
 
+		it( 'positions the icon off-screen when the target element has a very low top offset', function() {
+			mockTarget.offset = () => ( { top: 0, left: 100 } );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+		} );
+
+		it( 'positions the icon off-screen when the target element is very small', function() {
+			mockTarget.innerHeight = () => -1;
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+		} );
+
 		it( 'positions the icon at the top-left of the target', function() {
 			const element = {
 				id: 'test',

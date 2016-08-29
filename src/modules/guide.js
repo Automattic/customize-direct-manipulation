@@ -1,4 +1,4 @@
-import { getHtml, getStepHtml } from './guide-steps';
+import { getHtml } from './guide-steps';
 import getJQ from '../helpers/jquery';
 import { recordEvent } from '../helpers/record-event';
 import { animateWithClass, supportsAnimation } from '../helpers/animate';
@@ -35,7 +35,7 @@ function removeGuide() {
 			this.hide();
 		}, true );
 	} else {
-		$( '#dmguide-overlay' ).remove();
+		getJQ()( '#dmguide-overlay' ).remove();
 	}
 }
 

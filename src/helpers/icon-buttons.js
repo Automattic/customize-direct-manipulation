@@ -36,7 +36,9 @@ export function positionIcon( element ) {
 		return element;
 	}
 	const $icon = findOrCreateIcon( element );
-	$icon.css( getCalculatedCssForIcon( element.position, $target, $icon ) );
+	const css = getCalculatedCssForIcon( element.position, $target, $icon );
+	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
+	$icon.css( css );
 	return _.extend( {}, element, { $target, $icon } );
 }
 
@@ -94,6 +96,14 @@ function getCalculatedCssForIcon( position, $target, $icon ) {
 	const { left, top } = $target.offset();
 	const middle = $target.innerHeight() / 2;
 	const iconMiddle = $icon.innerHeight() / 2;
+	if ( top < 1 ) {
+		debug( 'top offset is unusually low for', $target, top );
+		return { left: -1000 };
+	}
+	if ( middle < 1 ) {
+		debug( 'middle height is unusually low for', $target, middle );
+		return { left: -1000 };
+	}
 	if ( position === 'middle' ) {
 		return adjustCoordinates( { top: top + middle - iconMiddle, left } );
 	} else if ( position === 'top-right' ) {

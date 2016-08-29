@@ -8,6 +8,7 @@ import { modifyEditPostLinks, disableEditPostLinks } from './modules/edit-post-l
 import { getHeaderElements } from './modules/header-focus';
 import { getWidgetElements } from './modules/widget-focus';
 import { getMenuElements } from './modules/menu-focus';
+import { getFooterElements } from './modules/footer-focus';
 
 const options = getOptions();
 const api = getAPI();
@@ -20,7 +21,8 @@ function startDirectManipulation() {
 	const headers = ( options.headerImageSupport ) ? getHeaderElements() : [];
 	const widgets = getWidgetElements();
 	const menus = getMenuElements();
-	makeFocusable( basicElements.concat( headers, widgets, menus ) );
+	const footers = getFooterElements();
+	makeFocusable( basicElements.concat( headers, widgets, menus, footers ) );
 
 	if ( isSafari() && ! isMobileSafari() ) {
 		disableEditPostLinks( '.post-edit-link, [href^="https://wordpress.com/post"], [href^="https://wordpress.com/page"]' );
