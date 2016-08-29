@@ -33,5 +33,5 @@ function startDirectManipulation() {
 
 api.bind( 'preview-ready', () => {
 	// the widget customizer doesn't run until document.ready, so let's run later
-	$( getWindow().document ).ready( setTimeout( startDirectManipulation, 100 ) );
+	$( getWindow().document ).ready( () => setTimeout( startDirectManipulation, 100 ) );
 } );
