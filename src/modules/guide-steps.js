@@ -9,7 +9,7 @@ export function nextStep() {
 }
 
 export function isLastStep() {
-	return currentStep >= steps.length;
+	return currentStep >= getOptions().steps.length;
 }
 
 function getTotalSteps() {
@@ -35,9 +35,8 @@ export function getHtml() {
 }
 
 export function getStepHtml() {
-	let stepData = getCurrentStepData();
+	const stepData = getCurrentStepData();
 	let html = '<div id="dmguide-text">';
-
 
 	if ( stepData.title ) {
 		html += `<h2 id="dmguide-header">${stepData.title}</h2>`;

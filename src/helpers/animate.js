@@ -1,6 +1,5 @@
 import getJQ from './jquery';
 
-
 let animationIsSupported;
 
 export function supportsAnimation() {
@@ -8,7 +7,7 @@ export function supportsAnimation() {
 		return animationIsSupported;
 	}
 	let animation = false;
-	let elm = document.createElement( 'div' );
+	const elm = document.createElement( 'div' );
 
 	if ( elm.style.animationName !== undefined || elm.style.WebkitAnimationName !== 'undefined' ) {
 		animation = true;
@@ -18,7 +17,7 @@ export function supportsAnimation() {
 }
 
 export function animateWithClass( selector, className, cb, removeAtEnd ) {
-	var $el = getJQ()( selector );
+	const $el = getJQ()( selector );
 
 	$el.addClass( className ).on( 'animationend webkitAnimationEnd', function() {
 		$el.removeClass( className ).off( 'animationend webkitAnimationEnd' );

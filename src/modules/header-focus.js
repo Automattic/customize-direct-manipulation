@@ -12,7 +12,7 @@ export function getHeaderElements() {
 function getHeaderElement() {
 	const selector = getHeaderSelector();
 	const position = ( selector === fallbackSelector ) ? 'top-right' : null;
-	return { id: 'header_image', selector, type: 'header', icon: 'headerIcon', position }
+	return { id: 'header_image', selector, type: 'header', icon: 'headerIcon', position };
 }
 
 function getHeaderSelector() {

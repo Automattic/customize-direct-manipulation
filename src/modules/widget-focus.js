@@ -38,5 +38,5 @@ function makeHandlerForId( id ) {
 		event.stopPropagation();
 		debug( 'click detected on', id );
 		send( 'focus-widget-control', id );
-	}
+	};
 }

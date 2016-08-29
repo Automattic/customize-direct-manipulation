@@ -45,5 +45,5 @@ function makeHandler( id, url ) {
 			name: 'wpcom_customize_direct_manipulation_click',
 			props: { type: 'post-icon' }
 		} );
-	}
+	};
 }
