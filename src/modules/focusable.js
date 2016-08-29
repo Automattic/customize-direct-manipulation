@@ -59,6 +59,9 @@ function startIconMonitor( elements ) {
 	// Reposition icons after any theme fonts load
 	repositionAfterFontsLoad( elements );
 
+	// Reposition icons after a few seconds just in case (eg: infinite scroll or other scripts complete)
+	setTimeout( makeRepositioner( elements, 'follow-up' ), 2000 );
+
 	// Reposition icons after the window is resized
 	$( getWindow() ).resize( makeRepositioner( elements, 'resize' ) );
 
