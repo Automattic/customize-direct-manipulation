@@ -36,7 +36,9 @@ export function positionIcon( element ) {
 		return element;
 	}
 	const $icon = findOrCreateIcon( element );
-	$icon.css( getCalculatedCssForIcon( element.position, $target, $icon ) );
+	const css = getCalculatedCssForIcon( element.position, $target, $icon );
+	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
+	$icon.css( css );
 	return _.extend( {}, element, { $target, $icon } );
 }
 
