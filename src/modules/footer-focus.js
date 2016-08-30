@@ -3,7 +3,7 @@ export function getFooterElements() {
 		{
 			id: 'footercredit',
 			selector: 'a[data-type="footer-credit"]',
-			type: 'footer',
+			type: 'footerCredit',
 			position: 'middle'
 		}
 	];
