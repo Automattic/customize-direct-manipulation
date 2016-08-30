@@ -109,6 +109,17 @@ describe( 'positionIcon()', function() {
 			expect( $el.hasClass( 'cdm-icon--text' ) ).to.be.false;
 			expect( $el.hasClass( 'cdm-icon--header-image' ) ).to.be.true;
 		} );
+
+		it( 'creates an icon button with the title attribute', function() {
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				icon: 'headerIcon',
+			};
+			positionIcon( element );
+			expect( $( '.cdm-icon__test' ).attr('title') ).equals( 'Click to edit the test type' );
+		} );
 	} );
 
 	describe( 'when positioning the icon button', function() {
