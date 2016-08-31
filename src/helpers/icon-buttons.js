@@ -82,7 +82,10 @@ function findOrCreateIcon( element ) {
 	if ( $icon.length ) {
 		return $icon;
 	}
-	return createAndAppendIcon( element.id, element.icon );
+
+	const title = `Click to edit the ${element.title}`;
+
+	return createAndAppendIcon( element.id, element.icon, title );
 }
 
 function getIconClassName( id ) {
@@ -90,26 +93,28 @@ function getIconClassName( id ) {
 }
 
 function getCalculatedCssForIcon( position, $target, $icon ) {
+	const hiddenIconPos = ( 'rtl' === document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
+
 	if ( ! $target.is( ':visible' ) ) {
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	const { left, top } = $target.offset();
 	const middle = $target.innerHeight() / 2;
 	const iconMiddle = $icon.innerHeight() / 2;
 	if ( top < 1 ) {
 		debug( 'top offset is unusually low for', $target, top );
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	if ( middle < 1 ) {
 		debug( 'middle height is unusually low for', $target, middle );
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	if ( position === 'middle' ) {
-		return adjustCoordinates( { top: top + middle - iconMiddle, left } );
+		return adjustCoordinates( { top: top + middle - iconMiddle, left, right: 'auto' } );
 	} else if ( position === 'top-right' ) {
-		return adjustCoordinates( { top, left: left + $target.width() + 70 } );
+		return adjustCoordinates( { top, left: left + $target.width() + 70, right: 'auto' } );
 	}
-	return adjustCoordinates( { top, left } );
+	return adjustCoordinates( { top, left, right: 'auto' } );
 }
 
 function adjustCoordinates( coords ) {
@@ -125,18 +130,18 @@ function adjustCoordinates( coords ) {
 	return coords;
 }
 
-function createIcon( id, iconType ) {
+function createIcon( id, iconType, title ) {
 	const iconClassName = getIconClassName( id );
 	switch ( iconType ) {
 		case 'headerIcon':
-			return $( `<div class="cdm-icon cdm-icon--header-image ${iconClassName}">${icons.headerIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--header-image ${iconClassName}" title="${title}">${icons.headerIcon}</div>` );
 		default:
-			return $( `<div class="cdm-icon cdm-icon--text ${iconClassName}">${icons.editIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--text ${iconClassName}" title="${title}">${icons.editIcon}</div>` );
 	}
 }
 
-function createAndAppendIcon( id, iconType ) {
-	const $icon = createIcon( id, iconType );
+function createAndAppendIcon( id, iconType, title ) {
+	const $icon = createIcon( id, iconType, title );
 	$( getWindow().document.body ).append( $icon );
 	return $icon;
 }

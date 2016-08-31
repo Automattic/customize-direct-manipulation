@@ -9,7 +9,8 @@ export function getMenuElements() {
 			id: menu.id,
 			selector: `.${menu.id}`,
 			type: 'menu',
-			handler: makeHandler( menu.location )
+			handler: makeHandler( menu.location ),
+			title: 'menu',
 		};
 	} );
 }

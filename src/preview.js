@@ -16,7 +16,7 @@ const $ = getJQuery();
 
 function startDirectManipulation() {
 	const basicElements = [
-		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle' },
+		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle', title: 'site title' },
 	];
 	const headers = ( options.headerImageSupport ) ? getHeaderElements() : [];
 	const widgets = getWidgetElements();
