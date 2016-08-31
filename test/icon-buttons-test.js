@@ -116,6 +116,7 @@ describe( 'positionIcon()', function() {
 				selector: '.site-title',
 				type: 'testType',
 				icon: 'headerIcon',
+				title: 'test type',
 			};
 			positionIcon( element );
 			expect( $( '.cdm-icon__test' ).attr('title') ).equals( 'Click to edit the test type' );
