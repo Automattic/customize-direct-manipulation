@@ -4,10 +4,10 @@ A WordPress plugin that adds small icons to the customizer preview that open the
 
 # Installation
 
-1. Visit the [Releases page](https://github.com/Automattic/customize-direct-manipulation/releases) and download the latest release. Save the zip file into the `wp-content/plugins` directory in your WordPress installation and then unzip the file. It will create a directory called `customize-direct-manipulation`.
-2. Enter the WordPress admin page for your site and navigate to the plugins page, eg: http://**YOUR WEBSITE HERE**/wp-admin/plugins.php
-3. Click "Activate" next to the "Customize Direct Manipulation" plugin.
-4. Load the customizer for your site, eg: http://**YOUR WEBSITE HERE**/wp-admin/customize.php
+1. Visit the [Releases page](https://github.com/Automattic/customize-direct-manipulation/releases) and download the latest release (not the source code).
+2. Navigate to Plugins → Add New in your WordPress site's admin area and click the "Upload Plugin" button at the top in order to upload the ZIP file. If this button doesn't exist due to file permissions, you can [install it manually](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+3. Activate the plugin, either from the page that shows up after uploading the ZIP file or from your plugins list if you uploaded the plugin manually.
+4. Navigate to Appearance → Customize from your WordPress menu.
 5. Click the small icons to activate the appropriate controls in the sidebar.
 
 ![Customizer with CDM active](https://cldup.com/aJXdAxaVNE.png)
