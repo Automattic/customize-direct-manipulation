@@ -3,6 +3,7 @@ import getJQuery from '../helpers/jquery';
 import { on } from '../helpers/messenger';
 import getUnderscore from '../helpers/underscore';
 import addClickHandler from '../helpers/click-handler';
+import getOptions from '../helpers/options';
 import debugFactory from 'debug';
 
 const _ = getUnderscore();
@@ -83,7 +84,7 @@ function findOrCreateIcon( element ) {
 		return $icon;
 	}
 
-	const title = `Click to edit the ${element.title}`;
+	const title = getOptions().translations[ element.type ] || `Click to edit the ${element.title}`;
 
 	return createAndAppendIcon( element.id, element.icon, title );
 }
