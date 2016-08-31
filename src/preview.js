@@ -24,10 +24,12 @@ function startDirectManipulation() {
 	const footers = getFooterElements();
 	makeFocusable( basicElements.concat( headers, widgets, menus, footers ) );
 
-	if ( isSafari() && ! isMobileSafari() ) {
-		disableEditPostLinks( '.post-edit-link, [href^="https://wordpress.com/post"], [href^="https://wordpress.com/page"]' );
-	} else {
-		modifyEditPostLinks( '.post-edit-link, [href^="https://wordpress.com/post"], [href^="https://wordpress.com/page"]' );
+	if ( -1 === options.disabledModules.indexOf( 'edit-post-links' ) ) {
+		if ( isSafari() && ! isMobileSafari() ) {
+			disableEditPostLinks( '.post-edit-link, [href^="https://wordpress.com/post"], [href^="https://wordpress.com/page"]' );
+		} else {
+			modifyEditPostLinks( '.post-edit-link, [href^="https://wordpress.com/post"], [href^="https://wordpress.com/page"]' );
+		}
 	}
 }
 

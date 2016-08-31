@@ -151,9 +151,26 @@ class Jetpack_Customizer_DM {
 	}
 
 	public function add_script_data_in_footer() {
+
+		/**
+		 * Filters the modules to disable in the Customize Direct Manipulation plugin.
+		 *
+		 * Plugins can push modules onto this list to disable aspects of the plugin.
+		 * For example, the Customize Posts plugin can disable the 'edit-post-links'
+		 * module because it has its own integration with the edit post links
+		 * whereby the posts can be edited in the customizer directly.
+		 *
+		 * Not all modules can currently be disabled.
+		 *
+		 * @param array $disabled_modules Disabled modules, defaulting to empty array.
+		 * @returns array Disabled modules.
+		 */
+		$disabled_modules = apply_filters( 'customize_direct_manipulation_disabled_modules', array() );
+
 		wp_localize_script( 'customize-dm-preview', '_Customizer_DM', array(
 			'menus' => $this->get_menu_data(),
-			'headerImageSupport' => current_theme_supports( 'custom-header' )
+			'headerImageSupport' => current_theme_supports( 'custom-header' ),
+			'disabledModules' => $disabled_modules,
 		) );
 	}
 
