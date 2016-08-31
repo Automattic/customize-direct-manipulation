@@ -153,7 +153,7 @@ class Jetpack_Customizer_DM {
 	public function add_script_data_in_footer() {
 
 		/**
-		 * Filters the disabled modules Customize Direct Manipulation.
+		 * Filters the modules to disable in the Customize Direct Manipulation plugin.
 		 *
 		 * Plugins can push modules onto this list to disable aspects of the plugin.
 		 * For example, the Customize Posts plugin can disable the 'edit-post-links'
