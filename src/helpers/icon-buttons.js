@@ -90,7 +90,7 @@ function getIconClassName( id ) {
 }
 
 function getCalculatedCssForIcon( position, $target, $icon ) {
-	const hiddenIconPos = ( 'rtl' === document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
+	const hiddenIconPos = ( 'rtl' === getWindow().document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
 	if ( ! $target.is( ':visible' ) ) {
 		return hiddenIconPos;
