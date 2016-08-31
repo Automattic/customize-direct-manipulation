@@ -94,26 +94,28 @@ function getIconClassName( id ) {
 }
 
 function getCalculatedCssForIcon( position, $target, $icon ) {
+	const hiddenIconPos = ( 'rtl' === getWindow().document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
+
 	if ( ! $target.is( ':visible' ) ) {
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	const { left, top } = $target.offset();
 	const middle = $target.innerHeight() / 2;
 	const iconMiddle = $icon.innerHeight() / 2;
 	if ( top < 1 ) {
 		debug( 'top offset is unusually low for', $target, top );
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	if ( middle < 1 ) {
 		debug( 'middle height is unusually low for', $target, middle );
-		return { left: -1000 };
+		return hiddenIconPos;
 	}
 	if ( position === 'middle' ) {
-		return adjustCoordinates( { top: top + middle - iconMiddle, left } );
+		return adjustCoordinates( { top: top + middle - iconMiddle, left, right: 'auto' } );
 	} else if ( position === 'top-right' ) {
-		return adjustCoordinates( { top, left: left + $target.width() + 70 } );
+		return adjustCoordinates( { top, left: left + $target.width() + 70, right: 'auto' } );
 	}
-	return adjustCoordinates( { top, left } );
+	return adjustCoordinates( { top, left, right: 'auto' } );
 }
 
 function adjustCoordinates( coords ) {

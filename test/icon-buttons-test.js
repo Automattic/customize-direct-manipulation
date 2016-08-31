@@ -2,6 +2,7 @@ import resetMarkup from './mock-window';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import chai from 'chai';
+import getWindow from '../src/helpers/window';
 import getJQuery from '../src/helpers/jquery';
 import { positionIcon } from '../src/helpers/icon-buttons';
 
@@ -153,7 +154,26 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
+		} );
+
+		it( 'positions the icon off-screen when the target element is hidden (RTL)', function() {
+			const documentDir = getWindow().document.dir;
+			getWindow().document.dir = 'rtl';
+
+			mockTarget.is = prop => ( prop !== ':visible' );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
+
+			// restore dir
+			getWindow().document.dir = documentDir;
 		} );
 
 		it( 'positions the icon off-screen when the target element has a very low top offset', function() {
@@ -166,7 +186,26 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
+		} );
+
+		it( 'positions the icon off-screen when the target element has a very low top offset (RTL)', function() {
+			const documentDir = getWindow().document.dir;
+			getWindow().document.dir = 'rtl';
+
+			mockTarget.offset = () => ( { top: 0, left: 100 } );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
+
+			// restore dir
+			getWindow().document.dir = documentDir;
 		} );
 
 		it( 'positions the icon off-screen when the target element is very small', function() {
@@ -179,7 +218,26 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { left: -1000 } );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
+		} );
+
+		it( 'positions the icon off-screen when the target element is very small (RTL)', function() {
+			const documentDir = getWindow().document.dir;
+			getWindow().document.dir = 'rtl';
+
+			mockTarget.innerHeight = () => -1;
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
+
+			// restore dir
+			getWindow().document.dir = documentDir;
 		} );
 
 		it( 'positions the icon at the top-left of the target', function() {
@@ -191,7 +249,7 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 100 } );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 100, right: 'auto' } );
 		} );
 
 		it( 'positions the icon at the left edge of the viewport if it would be off the left side', function() {
@@ -205,7 +263,7 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 35 } );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 35, right: 'auto' } );
 		} );
 
 		it( 'positions the icon at the left middle of the target if the position is `middle`', function() {
@@ -218,7 +276,7 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { top: 111, left: 100 } );
+			expect( cssSpy ).to.have.been.calledWith( { top: 111, left: 100, right: 'auto' } );
 		} );
 
 		it( 'positions the icon at the top-right of the target if the position is `top-right`', function() {
@@ -231,7 +289,7 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 370 } );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 370, right: 'auto' } );
 		} );
 
 		it( 'positions the icon at the right edge of the viewport if it would be off the right side', function() {
@@ -246,7 +304,7 @@ describe( 'positionIcon()', function() {
 				$icon: mockIcon,
 			};
 			positionIcon( element );
-			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 914 } );
+			expect( cssSpy ).to.have.been.calledWith( { top: 100, left: 914, right: 'auto' } );
 		} );
 	} );
 } );
