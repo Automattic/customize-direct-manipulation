@@ -167,10 +167,19 @@ class Jetpack_Customizer_DM {
 		 */
 		$disabled_modules = apply_filters( 'customize_direct_manipulation_disabled_modules', array() );
 
+		$translations = array(
+			'siteTitle' => __( 'Click to edit the site title' ),
+			'footerCredit' => __( 'Click to edit the footer credit' ),
+			'menu' => __( 'Click to edit this menu' ),
+			'post' => __( 'Click to edit this post' ),
+			'widget' => __( 'Click to edit this widget' ),
+		);
+
 		wp_localize_script( 'customize-dm-preview', '_Customizer_DM', array(
 			'menus' => $this->get_menu_data(),
 			'headerImageSupport' => current_theme_supports( 'custom-header' ),
 			'disabledModules' => $disabled_modules,
+			'translations' => $translations,
 		) );
 	}
 

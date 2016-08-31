@@ -3,6 +3,7 @@ import getJQuery from '../helpers/jquery';
 import { on } from '../helpers/messenger';
 import getUnderscore from '../helpers/underscore';
 import addClickHandler from '../helpers/click-handler';
+import getOptions from '../helpers/options';
 import debugFactory from 'debug';
 
 const _ = getUnderscore();
@@ -82,7 +83,10 @@ function findOrCreateIcon( element ) {
 	if ( $icon.length ) {
 		return $icon;
 	}
-	return createAndAppendIcon( element.id, element.icon );
+
+	const title = getOptions().translations[ element.type ] || `Click to edit the ${element.title}`;
+
+	return createAndAppendIcon( element.id, element.icon, title );
 }
 
 function getIconClassName( id ) {
@@ -125,18 +129,18 @@ function adjustCoordinates( coords ) {
 	return coords;
 }
 
-function createIcon( id, iconType ) {
+function createIcon( id, iconType, title ) {
 	const iconClassName = getIconClassName( id );
 	switch ( iconType ) {
 		case 'headerIcon':
-			return $( `<div class="cdm-icon cdm-icon--header-image ${iconClassName}">${icons.headerIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--header-image ${iconClassName}" title="${title}">${icons.headerIcon}</div>` );
 		default:
-			return $( `<div class="cdm-icon cdm-icon--text ${iconClassName}">${icons.editIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--text ${iconClassName}" title="${title}">${icons.editIcon}</div>` );
 	}
 }
 
-function createAndAppendIcon( id, iconType ) {
-	const $icon = createIcon( id, iconType );
+function createAndAppendIcon( id, iconType, title ) {
+	const $icon = createIcon( id, iconType, title );
 	$( getWindow().document.body ).append( $icon );
 	return $icon;
 }
