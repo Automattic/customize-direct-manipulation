@@ -19,7 +19,14 @@ export function getPostElements() {
 		if ( ! url ) {
 			return posts;
 		}
-		return posts.concat( { id: post.id, selector: `#${post.id} .entry-title`, type: 'post', position: 'middle', handler: makeHandler( post.id, url ) } );
+		return posts.concat( {
+			id: post.id,
+			selector: `#${post.id} .entry-title`,
+			type: 'post',
+			position: 'middle',
+			handler: makeHandler( post.id, url ),
+			title: 'post',
+		} );
 	}, [] );
 }
 

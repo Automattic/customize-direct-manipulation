@@ -4,7 +4,8 @@ export function getFooterElements() {
 			id: 'footercredit',
 			selector: 'a[data-type="footer-credit"]',
 			type: 'footerCredit',
-			position: 'middle'
+			position: 'middle',
+			title: 'footer credit',
 		}
 	];
 }
