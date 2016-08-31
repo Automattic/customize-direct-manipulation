@@ -11,7 +11,13 @@ export function getWidgetElements() {
 	return getWidgetSelectors()
 	.map( getWidgetsForSelector )
 	.reduce( ( widgets, id ) => widgets.concat( id ), [] ) // flatten the arrays
-	.map( id => ( { id, selector: getWidgetSelectorForId( id ), type: 'widget', handler: makeHandlerForId( id ) } ) );
+	.map( id => ( {
+		id,
+		selector: getWidgetSelectorForId( id ),
+		type: 'widget',
+		handler: makeHandlerForId( id ),
+		title: 'widget',
+	} ) );
 }
 
 function getWidgetSelectors() {

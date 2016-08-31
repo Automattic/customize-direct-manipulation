@@ -83,9 +83,7 @@ function findOrCreateIcon( element ) {
 		return $icon;
 	}
 
-	// generate the icon title from the icon type
-	const elementType = element.type.replace(/[A-Z]/g, (ch) => ` ${ch.toLowerCase()}`).trim();
-	const title = `Click to edit the ${elementType}`;
+	const title = `Click to edit the ${element.title}`;
 
 	return createAndAppendIcon( element.id, element.icon, title );
 }
