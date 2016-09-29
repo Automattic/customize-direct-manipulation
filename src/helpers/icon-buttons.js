@@ -37,7 +37,7 @@ export function positionIcon( element ) {
 		return element;
 	}
 	const $icon = findOrCreateIcon( element );
-	const css = getCalculatedCssForIcon( element.position, $target, $icon );
+	const css = getCalculatedCssForIcon( element, $target, $icon );
 	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
 	$icon.css( css );
 	return _.extend( {}, element, { $target, $icon } );
@@ -93,22 +93,35 @@ function getIconClassName( id ) {
 	return `cdm-icon__${id}`;
 }
 
-function getCalculatedCssForIcon( position, $target, $icon ) {
+function getCalculatedCssForIcon( element, $target, $icon ) {
+	const position = element.position;
 	const hiddenIconPos = ( 'rtl' === getWindow().document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
 	if ( ! $target.is( ':visible' ) ) {
+		debug( `target is not visible when positioning ${element.id}. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
-	const { left, top } = $target.offset();
-	const middle = $target.innerHeight() / 2;
-	const iconMiddle = $icon.innerHeight() / 2;
-	if ( top < 1 ) {
-		debug( 'top offset is unusually low for', $target, top );
+	const offset = $target.offset();
+	let top = offset.top;
+	const left = offset.left;
+	let middle = $target.innerHeight() / 2;
+	let iconMiddle = $icon.innerHeight() / 2;
+	if ( top < 0 ) {
+		debug( `target top offset ${top} is unusually low when positioning ${element.id}. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
+	}
+	if ( middle < 0 ) {
+		debug( `target middle offset ${middle} is unusually low when positioning ${element.id}. I will hide the icon. target:`, $target );
+		return hiddenIconPos;
+	}
+	if ( top < 1 ) {
+		debug( `target top offset ${top} is unusually low when positioning ${element.id}. I will adjust the icon downwards. target:`, $target );
+		top = 0;
 	}
 	if ( middle < 1 ) {
-		debug( 'middle height is unusually low for', $target, middle );
-		return hiddenIconPos;
+		debug( `target middle offset ${middle} is unusually low when positioning ${element.id}. I will adjust the icon downwards. target:`, $target );
+		middle = 0;
+		iconMiddle = 0;
 	}
 	if ( position === 'middle' ) {
 		return adjustCoordinates( { top: top + middle - iconMiddle, left, right: 'auto' } );
