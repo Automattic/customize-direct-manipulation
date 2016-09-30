@@ -120,7 +120,7 @@ describe( 'positionIcon()', function() {
 				title: 'test type',
 			};
 			positionIcon( element );
-			expect( $( '.cdm-icon__test' ).attr('title') ).equals( 'Click to edit the test type' );
+			expect( $( '.cdm-icon__test' ).attr( 'title' ) ).equals( 'Click to edit the test type' );
 		} );
 	} );
 
@@ -176,8 +176,21 @@ describe( 'positionIcon()', function() {
 			getWindow().document.dir = documentDir;
 		} );
 
-		it( 'positions the icon off-screen when the target element has a very low top offset', function() {
+		it( 'positions the icon at the screen edge when the target element has a very low top offset', function() {
 			mockTarget.offset = () => ( { top: 0, left: 100 } );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: 100, right: 'auto', top: 0 } );
+		} );
+
+		it( 'positions the icon off-screen when the target element has a negative top offset', function() {
+			mockTarget.offset = () => ( { top: -1, left: 100 } );
 			const element = {
 				id: 'test',
 				selector: '.site-title',
@@ -193,7 +206,7 @@ describe( 'positionIcon()', function() {
 			const documentDir = getWindow().document.dir;
 			getWindow().document.dir = 'rtl';
 
-			mockTarget.offset = () => ( { top: 0, left: 100 } );
+			mockTarget.offset = () => ( { top: -1, left: 100 } );
 			const element = {
 				id: 'test',
 				selector: '.site-title',

@@ -38,8 +38,13 @@ function mockCustomizer( mockWindow ) {
 	mockWindow.wp = { customize: {} };
 }
 
+function mockTranslations( mockWindow ) {
+	mockWindow._Customizer_DM = { translations: {} };
+}
+
 const mockWindow = getMockWindow( mockHtml );
 mockjQuery( mockWindow );
 mockUnderscore( mockWindow );
 mockCustomizer( mockWindow );
+mockTranslations( mockWindow );
 setWindow( mockWindow );
