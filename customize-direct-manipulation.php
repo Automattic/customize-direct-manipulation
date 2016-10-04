@@ -133,7 +133,7 @@ class Jetpack_Customizer_DM {
 
 		$steps = array(
 			array(
-				'content' => __( 'Here you can control the design of your site. Change your site name, update the colors and fonts, and even add a header image. Explore widgets to find new features and content to add to your website.' ),
+				'content' => __( 'Here you can control the design of your site. Change your site title, update the colors and fonts, and even add a header image. Explore widgets to find new features and content to add to your website.' ),
 				'smallContent' => __( 'Click the <strong>Preview</strong> icon to preview your site appearance before saving.' ),
 				'button' => __( 'Thanks, got it!' )
 			),
