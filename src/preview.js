@@ -19,9 +19,9 @@ function startDirectManipulation() {
 		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle', title: 'site title' },
 	];
 	const headers = ( options.headerImageSupport ) ? getHeaderElements() : [];
-	const widgets = getWidgetElements();
-	const menus = getMenuElements();
-	const footers = getFooterElements();
+	const widgets = ( -1 === options.disabledModules.indexOf( 'widget-focus' ) ) ? getWidgetElements() : [];
+	const menus   = ( -1 === options.disabledModules.indexOf( 'menu-focus' ) )   ? getMenuElements() : [];
+	const footers = ( -1 === options.disabledModules.indexOf( 'footer-focus' ) ) ? getFooterElements() : [];
 	makeFocusable( basicElements.concat( headers, widgets, menus, footers ) );
 
 	if ( -1 === options.disabledModules.indexOf( 'edit-post-links' ) ) {
