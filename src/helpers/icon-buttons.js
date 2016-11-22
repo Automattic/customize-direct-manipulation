@@ -94,18 +94,22 @@ function getIconClassName( id ) {
 }
 
 function getCalculatedCssForIcon( element, $target, $icon ) {
+	const isRTL = ( 'rtl' === getWindow().document.dir );
 	const position = element.position;
-	const hiddenIconPos = ( 'rtl' === getWindow().document.dir ) ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
+	const hiddenIconPos = isRTL ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
 	if ( ! $target.is( ':visible' ) ) {
 		debug( `target is not visible when positioning ${element.id}. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
+
 	const offset = $target.offset();
 	let top = offset.top;
 	const left = offset.left;
+	const right = getWindow().innerWidth - offset.left - $target.outerWidth() - $icon.outerWidth();
 	let middle = $target.innerHeight() / 2;
 	let iconMiddle = $icon.innerHeight() / 2;
+
 	if ( top < 0 ) {
 		debug( `target top offset ${top} is unusually low when positioning ${element.id}. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
@@ -123,25 +127,51 @@ function getCalculatedCssForIcon( element, $target, $icon ) {
 		middle = 0;
 		iconMiddle = 0;
 	}
-	if ( position === 'middle' ) {
-		return adjustCoordinates( { top: top + middle - iconMiddle, left, right: 'auto' } );
-	} else if ( position === 'top-right' ) {
-		return adjustCoordinates( { top, left: left + $target.width() + 70, right: 'auto' } );
+
+	const coords = { top };
+	if ( isRTL ) {
+		_.extend( coords, { left: 'auto', right } );
+	} else {
+		_.extend( coords, { left, right: 'auto' } );
 	}
-	return adjustCoordinates( { top, left, right: 'auto' } );
+
+	if ( position === 'middle' ) {
+		coords.top += middle - iconMiddle;
+	} else if ( position === 'top-right' ) {
+		if ( isRTL ) {
+			// Actually, the icon will be shown at the top left of the target in RTL mode.
+			coords.right += $target.width() + 70;
+		} else {
+			coords.left += $target.width() + 70;
+		}
+	}
+
+	return adjustCoordinates( coords );
 }
 
 function adjustCoordinates( coords ) {
-	const minWidth = 35;
-	// Try to avoid overlapping hamburger menus
-	const maxWidth = getWindow().innerWidth - 110;
-	if ( coords.left < minWidth ) {
-		coords.left = minWidth;
-	}
-	if ( coords.left >= maxWidth ) {
-		coords.left = maxWidth;
+	const minLeft = 35;
+	const minRight = 110;
+
+	if ( 'auto' !== coords.left ) {
+		// Try to avoid overlapping hamburger menus
+		const maxLeft = getWindow().innerWidth - minRight;
+		coords.left = clamp( minLeft, coords.left, maxLeft );
+	} else if ( 'auto' !== coords.right ) {
+		const maxRight = getWindow().innerWidth - minLeft;
+		coords.right = clamp( minRight, coords.right, maxRight );
 	}
 	return coords;
+}
+
+function clamp( min, value, max ) {
+	if ( min > value ) {
+		value = min;
+	}
+	if ( max < value ) {
+		value = max;
+	}
+	return value;
 }
 
 function createIcon( id, iconType, title ) {
