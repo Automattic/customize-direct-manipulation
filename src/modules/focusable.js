@@ -1,7 +1,6 @@
 import getWindow from '../helpers/window';
 import getAPI from '../helpers/api';
 import getJQuery from '../helpers/jquery';
-import getUnderscore from '../helpers/underscore';
 import { send } from '../helpers/messenger';
 import { positionIcon, addClickHandlerToIcon, repositionAfterFontsLoad, enableIconToggle } from '../helpers/icon-buttons';
 import debugFactory from 'debug';
@@ -9,7 +8,6 @@ import debugFactory from 'debug';
 const debug = debugFactory( 'cdm:focusable' );
 const api = getAPI();
 const $ = getJQuery();
-const _ = getUnderscore();
 
 /**
  * Give DOM elements an icon button bound to click handlers
