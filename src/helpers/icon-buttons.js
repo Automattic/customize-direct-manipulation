@@ -36,11 +36,17 @@ export function positionIcon( element ) {
 		debug( `Could not find target element for icon ${element.id} with selector ${element.selector}` );
 		return element;
 	}
+
+	let $partialContainer = null;
+	if ( $target.data( 'customize-partial-id' ) ) {
+		$partialContainer = $target;
+	}
+
 	const $icon = findOrCreateIcon( element );
 	const css = getCalculatedCssForIcon( element, $target, $icon );
 	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
 	$icon.css( css );
-	return _.extend( {}, element, { $target, $icon } );
+	return _.extend( {}, element, { $target, $icon, $partialContainer } );
 }
 
 export function addClickHandlerToIcon( element ) {
@@ -195,5 +201,6 @@ function getElementTarget( element ) {
 		// target was removed from DOM, likely by partial refresh
 		element.$target = null;
 	}
+
 	return element.$target || $( element.selector );
 }

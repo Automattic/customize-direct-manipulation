@@ -1,6 +1,7 @@
 import getWindow from '../helpers/window';
 import getAPI from '../helpers/api';
 import getJQuery from '../helpers/jquery';
+import getUnderscore from '../helpers/underscore';
 import { send } from '../helpers/messenger';
 import { positionIcon, addClickHandlerToIcon, repositionAfterFontsLoad, enableIconToggle } from '../helpers/icon-buttons';
 import debugFactory from 'debug';
@@ -8,6 +9,7 @@ import debugFactory from 'debug';
 const debug = debugFactory( 'cdm:focusable' );
 const api = getAPI();
 const $ = getJQuery();
+const _ = getUnderscore();
 
 /**
  * Give DOM elements an icon button bound to click handlers
@@ -95,6 +97,13 @@ function startIconMonitor( elements ) {
 		const observer = new MutationObserver( makeRepositioner( elements, 'DOM mutation' ) );
 		observer.observe( page, { attributes: true, childList: true, characterData: true } );
 	}
+
+	// Support partial update
+	const partialUpdateHandler = createPartialUpdateHandler( elements )
+	api.selectiveRefresh.partial.bind( 'add', partialUpdateHandler );
+	api.selectiveRefresh.partial.each( ( partial ) => {
+		partial.deferred.ready.done( () => partialUpdateHandler( partial ) );
+	} );
 }
 
 function createHandler( element ) {
@@ -116,5 +125,27 @@ function makeDefaultHandler( id ) {
 		event.stopPropagation();
 		debug( 'click detected on', id );
 		send( 'control-focus', id );
+	};
+}
+
+function createPartialUpdateHandler( elements ) {
+	return ( partial ) => {
+		const elementsToUpdate = elements.filter( element => {
+			const $container = element.$partialContainer;
+
+			if ( ! $container || $container.data( 'customize-partial-id' ) !== partial.id ) {
+				return false;
+			}
+
+			if ( 'function' === typeof element.onPartialUpdate ) {
+				element.onPartialUpdate.call( element, partial, element, elements );
+			}
+
+			return true;
+		} );
+
+		if ( elementsToUpdate.length > 0 )  {
+			repositionAfterFontsLoad( elementsToUpdate );
+		}
 	};
 }
