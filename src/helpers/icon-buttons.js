@@ -37,11 +37,7 @@ export function positionIcon( element ) {
 		return element;
 	}
 
-	let $partialContainer = null;
-	if ( $target.data( 'customize-partial-id' ) ) {
-		$partialContainer = $target;
-	}
-
+	const $partialContainer = ( $target.data( 'customize-partial-id' ) ) ? $target : null;
 	const $icon = findOrCreateIcon( element );
 	const css = getCalculatedCssForIcon( element, $target, $icon );
 	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
