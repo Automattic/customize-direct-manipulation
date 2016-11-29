@@ -11,7 +11,7 @@ export function getMenuElements() {
 			type: 'menu',
 			handler: makeHandler( menu.location ),
 			title: 'menu',
-			onPartialUpdate: onPartialUpdate,
+			onPartialUpdate,
 		};
 	} );
 }
