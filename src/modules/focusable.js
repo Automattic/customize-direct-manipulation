@@ -97,7 +97,7 @@ function startIconMonitor( elements ) {
 	}
 
 	// Support partial update
-	const partialUpdateHandler = createPartialUpdateHandler( elements )
+	const partialUpdateHandler = createPartialUpdateHandler( elements );
 	api.selectiveRefresh.partial.bind( 'add', partialUpdateHandler );
 	api.selectiveRefresh.partial.each( ( partial ) => {
 		partial.deferred.ready.done( () => partialUpdateHandler( partial ) );
