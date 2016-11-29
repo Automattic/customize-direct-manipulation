@@ -128,7 +128,7 @@ class Jetpack_Customizer_DM {
 	}
 
 	public function admin_enqueue() {
-		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
+		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls', 'customize-selective-refresh' ), '20161129', true );
 		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
 
 		$steps = array(

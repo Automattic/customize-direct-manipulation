@@ -10,12 +10,25 @@ import { getWidgetElements } from './modules/widget-focus';
 import { getMenuElements } from './modules/menu-focus';
 import { getFooterElements } from './modules/footer-focus';
 import { getSiteLogoElements } from './modules/site-logo-focus';
+import debugFactory from 'debug';
+const debug = debugFactory( 'cdm:preview' );
 
 const options = getOptions();
 const api = getAPI();
 const $ = getJQuery();
 
+function disableEditShortcuts() {
+	if ( api.selectiveRefresh && api.selectiveRefresh.Partial && api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement ) {
+		debug( 'disabling edit shortcuts' );
+		api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement = function() {};
+	} else {
+		debug( 'no edit shortcuts support detected' );
+	}
+}
+
 function startDirectManipulation() {
+	disableEditShortcuts();
+
 	const basicElements = [
 		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle', title: 'site title' },
 	];
