@@ -128,20 +128,21 @@ function makeDefaultHandler( id ) {
 
 function createPartialUpdateHandler( elements ) {
 	return ( partial ) => {
+		// Get the elements that refer partial containers.
 		const elementsToUpdate = elements.filter( element => {
 			const $container = element.$partialContainer;
 
-			if ( ! $container || $container.data( 'customize-partial-id' ) !== partial.id ) {
-				return false;
-			}
+			return ( $container && $container.data( 'customize-partial-id' ) === partial.id );
+		} );
 
+		// Trigger onPartialUpdate on the elements if possible
+		elementsToUpdate.map( element => {
 			if ( 'function' === typeof element.onPartialUpdate ) {
 				element.onPartialUpdate.call( element, partial, element, elements );
 			}
-
-			return true;
 		} );
 
+		// Reposition the icons that are associated with the partial containers.
 		if ( elementsToUpdate.length > 0 )  {
 			repositionAfterFontsLoad( elementsToUpdate );
 		}
