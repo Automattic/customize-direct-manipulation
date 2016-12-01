@@ -95,6 +95,13 @@ function startIconMonitor( elements ) {
 		const observer = new MutationObserver( makeRepositioner( elements, 'DOM mutation' ) );
 		observer.observe( page, { attributes: true, childList: true, characterData: true } );
 	}
+
+	// Support partial update
+	const partialUpdateHandler = createPartialUpdateHandler( elements );
+	api.selectiveRefresh.partial.bind( 'add', partialUpdateHandler );
+	api.selectiveRefresh.partial.each( ( partial ) => {
+		partial.deferred.ready.done( () => partialUpdateHandler( partial ) );
+	} );
 }
 
 function createHandler( element ) {
@@ -116,5 +123,28 @@ function makeDefaultHandler( id ) {
 		event.stopPropagation();
 		debug( 'click detected on', id );
 		send( 'control-focus', id );
+	};
+}
+
+function createPartialUpdateHandler( elements ) {
+	return ( partial ) => {
+		// Get the elements that refer partial containers.
+		const elementsToUpdate = elements.filter( element => {
+			const $container = element.$partialContainer;
+
+			return ( $container && $container.data( 'customize-partial-id' ) === partial.id );
+		} );
+
+		// Trigger onPartialUpdate on the elements if possible
+		elementsToUpdate.map( element => {
+			if ( 'function' === typeof element.onPartialUpdate ) {
+				element.onPartialUpdate.call( element, partial, element, elements );
+			}
+		} );
+
+		// Reposition the icons that are associated with the partial containers.
+		if ( elementsToUpdate.length > 0 )  {
+			repositionAfterFontsLoad( elementsToUpdate );
+		}
 	};
 }
