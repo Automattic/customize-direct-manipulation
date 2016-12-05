@@ -63,7 +63,7 @@ module.exports = function( grunt ) {
 	} );
 
 	grunt.registerTask( 'default', [ 'browserify:devPreview', 'browserify:devAdmin', 'copytotheplace', 'watch' ] );
-	grunt.registerTask( 'dist', [ 'browserify:devPreview', 'browserify:devAdmin', 'uglify:dist' ] );
+	grunt.registerTask( 'dist', [ 'browserify:devPreview', 'browserify:devAdmin', 'uglify:dist', 'copytotheplace' ] );
 	grunt.registerTask( 'test', [ 'mochaTest' ] );
 };
 
