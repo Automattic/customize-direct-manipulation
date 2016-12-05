@@ -128,7 +128,7 @@ class Jetpack_Customizer_DM {
 	}
 
 	public function admin_enqueue() {
-		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20160411', true );
+		wp_enqueue_script( 'customize-dm-admin', plugins_url( 'js/customize-dm-admin.js', __FILE__ ), array( 'customize-controls' ), '20161129', true );
 		wp_enqueue_style( 'customize-dm-admin', plugins_url( 'css/cdm-admin.css', __FILE__ ) );
 
 		$steps = array(
@@ -145,7 +145,7 @@ class Jetpack_Customizer_DM {
 
 	public function preview_enqueue() {
 		wp_enqueue_style( 'customize-dm-preview', plugins_url( 'css/customize-direct-manipulation.css', __FILE__ ), array(), '20160411' );
-		wp_enqueue_script( 'customize-dm-preview', plugins_url( 'js/customize-dm-preview.js', __FILE__ ), array( 'jquery' ), '20160411', true );
+		wp_enqueue_script( 'customize-dm-preview', plugins_url( 'js/customize-dm-preview.js', __FILE__ ), array( 'jquery', 'customize-selective-refresh' ), '20161205', true );
 		add_action( 'wp_footer', array( $this, 'add_script_data_in_footer' ) );
 		add_filter( 'widget_links_args', array( $this, 'fix_widget_links' ) );
 	}
