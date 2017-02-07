@@ -17,7 +17,7 @@ api.bind( 'ready', () => {
 
 	addFocusListener( 'control-focus', id => api.control( id ) );
 	addFocusListener( 'focus-menu', id => api.section( id ) );
-	addFocusListener( 'focus-menu-location', id => api.control( `nav_menu_locations[${id}]` ) );
+	addFocusListener( 'focus-menu-location', id => api.control( `nav_menu_locations[${ id }]` ) );
 
 	// disable core so we can enhance by making sure the controls panel opens
 	// before trying to focus the widget

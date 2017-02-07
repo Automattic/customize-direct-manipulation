@@ -32,10 +32,10 @@ function startDirectManipulation() {
 	const basicElements = [
 		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle', title: 'site title' },
 	];
-	const headers  = ! options.headerImageSupport    ? [] : getHeaderElements();
-	const widgets  = isDisabled( 'widget-focus' )    ? [] : getWidgetElements();
-	const menus    = isDisabled( 'menu-focus' )      ? [] : getMenuElements();
-	const footers  = isDisabled( 'footer-focus' )    ? [] : getFooterElements();
+	const headers = ! options.headerImageSupport ? [] : getHeaderElements();
+	const widgets = isDisabled( 'widget-focus' ) ? [] : getWidgetElements();
+	const menus = isDisabled( 'menu-focus' ) ? [] : getMenuElements();
+	const footers = isDisabled( 'footer-focus' ) ? [] : getFooterElements();
 	const siteLogo = isDisabled( 'site-logo-focus' ) ? [] : getSiteLogoElements();
 	makeFocusable( basicElements.concat( headers, widgets, menus, footers, siteLogo ) );
 
