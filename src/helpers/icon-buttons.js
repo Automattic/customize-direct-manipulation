@@ -33,14 +33,14 @@ const icons = {
 export function positionIcon( element ) {
 	const $target = getElementTarget( element );
 	if ( ! $target.length ) {
-		debug( `Could not find target element for icon ${element.id} with selector ${element.selector}` );
+		debug( `Could not find target element for icon ${ element.id } with selector ${ element.selector }` );
 		return element;
 	}
 
 	const $partialContainer = ( $target.data( 'customize-partial-id' ) ) ? $target : null;
 	const $icon = findOrCreateIcon( element );
 	const css = getCalculatedCssForIcon( element, $target, $icon );
-	debug( `positioning icon for ${element.id} with CSS ${JSON.stringify( css )}` );
+	debug( `positioning icon for ${ element.id } with CSS ${ JSON.stringify( css ) }` );
 	$icon.css( css );
 	return _.extend( {}, element, { $target, $icon, $partialContainer } );
 }
@@ -49,12 +49,12 @@ export function addClickHandlerToIcon( element ) {
 	if ( ! element.$icon ) {
 		return element;
 	}
-	addClickHandler( `.${getIconClassName( element.id )}`, element.handler );
+	addClickHandler( `.${ getIconClassName( element.id ) }`, element.handler );
 	return element;
 }
 
 const iconRepositioner = _.debounce( elements => {
-	debug( `repositioning ${elements.length} icons` );
+	debug( `repositioning ${ elements.length } icons` );
 	elements.map( positionIcon );
 }, 350 );
 
@@ -81,18 +81,18 @@ function findOrCreateIcon( element ) {
 	if ( element.$icon ) {
 		return element.$icon;
 	}
-	const $icon = $( `.${getIconClassName( element.id )}` );
+	const $icon = $( `.${ getIconClassName( element.id ) }` );
 	if ( $icon.length ) {
 		return $icon;
 	}
 
-	const title = getOptions().translations[ element.type ] || `Click to edit the ${element.title}`;
+	const title = getOptions().translations[ element.type ] || `Click to edit the ${ element.title }`;
 
 	return createAndAppendIcon( element.id, element.icon, title );
 }
 
 function getIconClassName( id ) {
-	return `cdm-icon__${id}`;
+	return `cdm-icon__${ id }`;
 }
 
 function getCalculatedCssForIcon( element, $target, $icon ) {
@@ -101,7 +101,7 @@ function getCalculatedCssForIcon( element, $target, $icon ) {
 	const hiddenIconPos = isRTL ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
 	if ( ! $target.is( ':visible' ) ) {
-		debug( `target is not visible when positioning ${element.id}. I will hide the icon. target:`, $target );
+		debug( `target is not visible when positioning ${ element.id }. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
 
@@ -113,19 +113,19 @@ function getCalculatedCssForIcon( element, $target, $icon ) {
 	let iconMiddle = $icon.innerHeight() / 2;
 
 	if ( top < 0 ) {
-		debug( `target top offset ${top} is unusually low when positioning ${element.id}. I will hide the icon. target:`, $target );
+		debug( `target top offset ${ top } is unusually low when positioning ${ element.id }. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
 	if ( middle < 0 ) {
-		debug( `target middle offset ${middle} is unusually low when positioning ${element.id}. I will hide the icon. target:`, $target );
+		debug( `target middle offset ${ middle } is unusually low when positioning ${ element.id }. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
 	if ( top < 1 ) {
-		debug( `target top offset ${top} is unusually low when positioning ${element.id}. I will adjust the icon downwards. target:`, $target );
+		debug( `target top offset ${ top } is unusually low when positioning ${ element.id }. I will adjust the icon downwards. target:`, $target );
 		top = 0;
 	}
 	if ( middle < 1 ) {
-		debug( `target middle offset ${middle} is unusually low when positioning ${element.id}. I will adjust the icon downwards. target:`, $target );
+		debug( `target middle offset ${ middle } is unusually low when positioning ${ element.id }. I will adjust the icon downwards. target:`, $target );
 		middle = 0;
 		iconMiddle = 0;
 	}
@@ -180,9 +180,9 @@ function createIcon( id, iconType, title ) {
 	const iconClassName = getIconClassName( id );
 	switch ( iconType ) {
 		case 'headerIcon':
-			return $( `<div class="cdm-icon cdm-icon--header-image ${iconClassName}" title="${title}">${icons.headerIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--header-image ${ iconClassName }" title="${ title }">${ icons.headerIcon }</div>` );
 		default:
-			return $( `<div class="cdm-icon cdm-icon--text ${iconClassName}" title="${title}">${icons.editIcon}</div>` );
+			return $( `<div class="cdm-icon cdm-icon--text ${ iconClassName }" title="${ title }">${ icons.editIcon }</div>` );
 	}
 }
 
