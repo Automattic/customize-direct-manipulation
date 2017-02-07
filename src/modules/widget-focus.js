@@ -8,6 +8,10 @@ const api = getAPI();
 const $ = getJQuery();
 
 export function getWidgetElements() {
+	if ( isShowingDefaultWidgets() ) {
+		debug( 'skipping widgets because none are defined in WidgetCustomizerPreview' );
+		return [];
+	}
 	return getWidgetSelectors()
 	.map( getWidgetsForSelector )
 	.reduce( ( widgets, id ) => widgets.concat( id ), [] ) // flatten the arrays
@@ -18,6 +22,10 @@ export function getWidgetElements() {
 		handler: makeHandlerForId( id ),
 		title: 'widget',
 	} ) );
+}
+
+function isShowingDefaultWidgets() {
+	return api.widgetsPreview.renderedWidgets.length === 0;
 }
 
 function getWidgetSelectors() {
@@ -35,7 +43,7 @@ function getWidgetsForSelector( selector ) {
 }
 
 function getWidgetSelectorForId( id ) {
-	return `#${id}`;
+	return `#${ id }`;
 }
 
 function makeHandlerForId( id ) {
