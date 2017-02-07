@@ -8,6 +8,7 @@
 		"node": true
 	},
 	rules: {
-		"max-len": 0
+		"max-len": 0,
+		"wpcalypso/import-docblock": 0
 	}
 }
