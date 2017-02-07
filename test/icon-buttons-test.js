@@ -144,8 +144,22 @@ describe( 'positionIcon()', function() {
 			mockIcon.css = cssSpy;
 		} );
 
-		it( 'positions the icon off-screen when the target element is hidden', function() {
+		it( 'positions the icon off-screen when the target element is hidden with `display`', function() {
 			mockTarget.is = prop => ( prop !== ':visible' );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
+		} );
+
+		it( 'positions the icon off-screen when the target element is hidden with `visibility`', function() {
+			mockTarget.css( 'visibility', 'hidden' );
+			mockTarget.is = prop => ( prop === ':visible' );
 			const element = {
 				id: 'test',
 				selector: '.site-title',
