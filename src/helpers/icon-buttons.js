@@ -100,7 +100,7 @@ function getCalculatedCssForIcon( element, $target, $icon ) {
 	const position = element.position;
 	const hiddenIconPos = isRTL ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
-	if ( ! $target.is( ':visible' ) ) {
+	if ( ! $target.is( ':visible' ) || $target.css( 'visibility' ) === 'hidden' ) {
 		debug( `target is not visible when positioning ${ element.id }. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}
