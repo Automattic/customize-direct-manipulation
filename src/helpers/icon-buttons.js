@@ -95,12 +95,16 @@ function getIconClassName( id ) {
 	return `cdm-icon__${ id }`;
 }
 
+function isTargetHidden( $target ) {
+	return ( ! $target.is( ':visible' ) || $target.css( 'visibility' ) === 'hidden' || $target.css( 'clip' ) === 'rect(1px 1px 1px 1px)' );
+}
+
 function getCalculatedCssForIcon( element, $target, $icon ) {
 	const isRTL = ( 'rtl' === getWindow().document.dir );
 	const position = element.position;
 	const hiddenIconPos = isRTL ? { right: -1000, left: 'auto' } : { left: -1000, right: 'auto' };
 
-	if ( ! $target.is( ':visible' ) || $target.css( 'visibility' ) === 'hidden' ) {
+	if ( isTargetHidden( $target ) ) {
 		debug( `target is not visible when positioning ${ element.id }. I will hide the icon. target:`, $target );
 		return hiddenIconPos;
 	}

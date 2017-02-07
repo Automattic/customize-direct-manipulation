@@ -171,6 +171,28 @@ describe( 'positionIcon()', function() {
 			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
 		} );
 
+		it( 'positions the icon off-screen when the target element is hidden with `clip`', function() {
+			// clip property does not appear to work with jsdom so we fake it
+			const mockTargetProperties = {};
+			mockTarget.css = ( prop, val ) => {
+				if ( ! val ) {
+					return mockTargetProperties[ prop ];
+				}
+				mockTargetProperties[ prop ] = val;
+			};
+			mockTarget.css( 'clip', 'rect(1px 1px 1px 1px)' );
+			mockTarget.is = prop => ( prop === ':visible' );
+			const element = {
+				id: 'test',
+				selector: '.site-title',
+				type: 'testType',
+				$target: mockTarget,
+				$icon: mockIcon,
+			};
+			positionIcon( element );
+			expect( cssSpy ).to.have.been.calledWith( { left: -1000, right: 'auto' } );
+		} );
+
 		it( 'positions the icon off-screen when the target element is hidden (RTL)', function() {
 			const documentDir = getWindow().document.dir;
 			getWindow().document.dir = 'rtl';
