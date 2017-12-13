@@ -8,7 +8,8 @@
   "scripts": {
     "start": "grunt",
     "dist": "grunt dist",
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "(svn info . 1>/dev/null 2>&1 && svn propset svn:ignore -F .svnignore .) || echo 'Not a working copy.'"
   },
   "repository": {
     "type": "git",

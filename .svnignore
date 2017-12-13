@@ -1,0 +1,9 @@
+.*
+*.md
+*.log
+src
+test
+Gruntfile.js
+package.json
+circle.yml
+node_modules
