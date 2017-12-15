@@ -6,13 +6,15 @@ const smallScreenWidth = 640;
 
 export function nextStep() {
 	currentStep++;
+	getJQ()( '#dmguide .dmguide-step' ).html( getStepHtml() );
+	getJQ()( '#dmguide' ).offset( getStepPosition() );
 }
 
 export function isLastStep() {
 	return currentStep >= getOptions().steps.length;
 }
 
-function getTotalSteps() {
+export function getTotalSteps() {
 	return getOptions().steps.length;
 }
 
@@ -24,7 +26,7 @@ function getCurrentStepData() {
 	return getStepData( currentStep );
 }
 
-function getCurrentStep() {
+export function getCurrentStep() {
 	return currentStep;
 }
 
@@ -55,6 +57,11 @@ export function getStepHtml() {
 	html += '</div>';
 
 	return html;
+}
+
+export function getStepPosition() {
+	const { styleTop, styleLeft } = getCurrentStepData();
+	return { top: styleTop || 97, left: styleLeft || 307 };
 }
 
 function getButtons() {
