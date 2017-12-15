@@ -6,6 +6,7 @@
 
 import getWindow, { setWindow } from '../src/helpers/window';
 import mockHtml from './mock-html';
+import { JSDOM } from 'jsdom';
 
 /**
  * Reset the markup in the DOM to the initial state
@@ -21,8 +22,7 @@ export default function resetMarkup() {
  * @return {Object} The window object
  */
 function getMockWindow( html ) {
-	const jsdom = require( 'jsdom' ).jsdom( html );
-	return jsdom.defaultView;
+	return new JSDOM( html ).window;
 }
 
 function mockjQuery( mockWindow ) {

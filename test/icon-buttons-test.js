@@ -135,6 +135,7 @@ describe( 'positionIcon()', function() {
 			mockTarget.offset = () => ( { top: 100, left: 100 } );
 			mockTarget.innerHeight = () => 40;
 			mockTarget.width = () => 200;
+			mockTarget.is = prop => ( prop === ':visible' );
 
 			// Mock icon because jsdom has no positioning
 			// Use a random page element as the 'icon' for this test so we don't have to add it
@@ -159,7 +160,6 @@ describe( 'positionIcon()', function() {
 
 		it( 'positions the icon off-screen when the target element is hidden with `visibility`', function() {
 			mockTarget.css( 'visibility', 'hidden' );
-			mockTarget.is = prop => ( prop === ':visible' );
 			const element = {
 				id: 'test',
 				selector: '.site-title',
@@ -181,7 +181,6 @@ describe( 'positionIcon()', function() {
 				mockTargetProperties[ prop ] = val;
 			};
 			mockTarget.css( 'clip', 'rect(1px 1px 1px 1px)' );
-			mockTarget.is = prop => ( prop === ':visible' );
 			const element = {
 				id: 'test',
 				selector: '.site-title',

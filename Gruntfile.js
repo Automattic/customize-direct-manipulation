@@ -40,30 +40,19 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
-		copytotheplace: {
-			all: [ 'css', 'js', 'customize-direct-manipulation.php' ]
-		},
 		watch: {
 			options: {
 				livereload: true
 			},
 			js: {
 				files: [ 'src/**/*.js' ],
-				tasks: [ 'browserify:devPreview', 'browserify:devAdmin', 'copytotheplace' ]
+				tasks: [ 'browserify:devPreview', 'browserify:devAdmin' ]
 			},
-			php: {
-				files: [ 'customize-direct-manipulation.php' ],
-				tasks: [ 'copytotheplace' ]
-			},
-			css: {
-				files: [ 'css/*.css' ],
-				tasks: [ 'copytotheplace' ]
-			}
-		}
+		},
 	} );
 
-	grunt.registerTask( 'default', [ 'browserify:devPreview', 'browserify:devAdmin', 'copytotheplace', 'watch' ] );
-	grunt.registerTask( 'dist', [ 'browserify:devPreview', 'browserify:devAdmin', 'uglify:dist', 'copytotheplace' ] );
+	grunt.registerTask( 'default', [ 'browserify:devPreview', 'browserify:devAdmin', 'watch' ] );
+	grunt.registerTask( 'dist', [ 'browserify:devPreview', 'browserify:devAdmin', 'uglify:dist' ] );
 	grunt.registerTask( 'test', [ 'mochaTest' ] );
 };
 
