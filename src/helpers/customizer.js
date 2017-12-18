@@ -51,11 +51,11 @@ export function areSettingsChanged() {
  */
 export function getChangedSettings() {
 	return getAllSettingIds()
-	.filter( isSettingChanged )
-	.reduce( ( settings, settingId ) => {
-		settings[ settingId ] = getSettingValue( settingId );
-		return settings;
-	}, {} );
+		.filter( isSettingChanged )
+		.reduce( ( settings, settingId ) => {
+			settings[ settingId ] = getSettingValue( settingId );
+			return settings;
+		}, {} );
 }
 
 /**

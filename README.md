@@ -14,9 +14,9 @@ A WordPress plugin that adds small icons to the customizer preview that open the
 
 # Contributing
 
-1. Clone this repo and install it on a WordPress site. You can either clone the repo directly into your `/wp-content/plugins` directory, or use [copytotheplace](https://github.com/sirbrillig/copytotheplace) by adding a `.env` file with your target directory and running `grunt copytotheplace`.
+1. Clone this repo and install it on a WordPress site. You can clone the repo directly into your `/wp-content/plugins` directory.
 2. After cloning, run `npm install` and then `npm run dist` to compile the JavaScript.
-3. To start a watcher process for development, run `npm start` (this will also run copytotheplace if you have a `.env` file set).
+3. To start a watcher process for development, run `npm start`.
 4. If you want to see detailed info in your browser console, enable debugging by running the following command in the console and then reloading the page: `localStorage.setItem('debug', 'cdm:*');`.
 
 # Testing

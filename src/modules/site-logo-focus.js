@@ -6,6 +6,6 @@ export function getSiteLogoElements() {
 			type: 'siteLogo',
 			icon: 'headerIcon',
 			title: 'site logo',
-		}
+		},
 	];
 }

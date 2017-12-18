@@ -1,14 +1,10 @@
-import resetMarkup from './mock-window';
+import { resetMarkup, mockWindow as window, $ } from './mock-window';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import chai from 'chai';
-import getWindow from '../src/helpers/window';
-import getJQuery from '../src/helpers/jquery';
+import chai, { expect } from 'chai';
 import { positionIcon } from '../src/helpers/icon-buttons';
 
 chai.use( sinonChai );
-const expect = chai.expect;
-const $ = getJQuery();
 
 describe( 'positionIcon()', function() {
 	afterEach( function() {
@@ -193,8 +189,8 @@ describe( 'positionIcon()', function() {
 		} );
 
 		it( 'positions the icon off-screen when the target element is hidden (RTL)', function() {
-			const documentDir = getWindow().document.dir;
-			getWindow().document.dir = 'rtl';
+			const documentDir = window.document.dir;
+			window.document.dir = 'rtl';
 
 			mockTarget.is = prop => ( prop !== ':visible' );
 			const element = {
@@ -208,7 +204,7 @@ describe( 'positionIcon()', function() {
 			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
 
 			// restore dir
-			getWindow().document.dir = documentDir;
+			window.document.dir = documentDir;
 		} );
 
 		it( 'positions the icon at the screen edge when the target element has a very low top offset', function() {
@@ -238,8 +234,8 @@ describe( 'positionIcon()', function() {
 		} );
 
 		it( 'positions the icon off-screen when the target element has a very low top offset (RTL)', function() {
-			const documentDir = getWindow().document.dir;
-			getWindow().document.dir = 'rtl';
+			const documentDir = window.document.dir;
+			window.document.dir = 'rtl';
 
 			mockTarget.offset = () => ( { top: -1, left: 100 } );
 			const element = {
@@ -253,7 +249,7 @@ describe( 'positionIcon()', function() {
 			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
 
 			// restore dir
-			getWindow().document.dir = documentDir;
+			window.document.dir = documentDir;
 		} );
 
 		it( 'positions the icon off-screen when the target element is very small', function() {
@@ -270,8 +266,8 @@ describe( 'positionIcon()', function() {
 		} );
 
 		it( 'positions the icon off-screen when the target element is very small (RTL)', function() {
-			const documentDir = getWindow().document.dir;
-			getWindow().document.dir = 'rtl';
+			const documentDir = window.document.dir;
+			window.document.dir = 'rtl';
 
 			mockTarget.innerHeight = () => -1;
 			const element = {
@@ -285,7 +281,7 @@ describe( 'positionIcon()', function() {
 			expect( cssSpy ).to.have.been.calledWith( { left: 'auto', right: -1000 } );
 
 			// restore dir
-			getWindow().document.dir = documentDir;
+			window.document.dir = documentDir;
 		} );
 
 		it( 'positions the icon at the top-left of the target', function() {

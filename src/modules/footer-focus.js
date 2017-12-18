@@ -6,6 +6,6 @@ export function getFooterElements() {
 			type: 'footerCredit',
 			position: 'middle',
 			title: 'footer credit',
-		}
+		},
 	];
 }

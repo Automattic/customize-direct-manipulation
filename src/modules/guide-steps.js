@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import getOptions from '../helpers/options';
 
 let currentStep = 1;
@@ -6,8 +7,8 @@ const smallScreenWidth = 640;
 
 export function nextStep() {
 	currentStep++;
-	getJQ()( '#dmguide .dmguide-step' ).html( getStepHtml() );
-	getJQ()( '#dmguide' ).offset( getStepPosition() );
+	$( '#dmguide .dmguide-step' ).html( getStepHtml() );
+	$( '#dmguide' ).offset( getStepPosition() );
 }
 
 export function isLastStep() {
@@ -32,7 +33,7 @@ export function getCurrentStep() {
 
 export function getHtml() {
 	return `<div id="dmguide-overlay"><div id="dmguide">
-	<div class="dmguide-step">${getStepHtml()}</div>
+	<div class="dmguide-step">${ getStepHtml() }</div>
 	</div></div>`;
 }
 
@@ -41,14 +42,14 @@ export function getStepHtml() {
 	let html = '<div id="dmguide-text">';
 
 	if ( stepData.title ) {
-		html += `<h2 id="dmguide-header">${stepData.title}</h2>`;
+		html += `<h2 id="dmguide-header">${ stepData.title }</h2>`;
 	}
 
 	if ( stepData.content ) {
 		html += stepData.content;
 	}
 
-	if ( stepData.smallContent && matchMedia && matchMedia( `screen and (max-width:${smallScreenWidth}px)` ).matches ) {
+	if ( stepData.smallContent && matchMedia && matchMedia( `screen and (max-width:${ smallScreenWidth }px)` ).matches ) {
 		html += ' ' + stepData.smallContent;
 	}
 
@@ -68,10 +69,10 @@ function getButtons() {
 	let html = '<div class="dmguide-button-wrap">';
 
 	if ( getCurrentStep() >= 1 && getCurrentStep() < getTotalSteps() ) {
-		html += `<button class="dmguide-button dmguide-next dmguide-button-primary">${getCurrentStepData().button}</button>`;
+		html += `<button class="dmguide-button dmguide-next dmguide-button-primary">${ getCurrentStepData().button }</button>`;
 	}
 	if ( getCurrentStep() === getTotalSteps() ) {
-		html += `<button class="dmguide-button dmguide-button-primary">${getCurrentStepData().button}</button>`;
+		html += `<button class="dmguide-button dmguide-button-primary">${ getCurrentStepData().button }</button>`;
 	}
 
 	html += '</div>';

@@ -3,7 +3,7 @@
 *.log
 src
 test
-Gruntfile.js
+rollup.config.js
 package.json
 package-lock.json
 circle.yml

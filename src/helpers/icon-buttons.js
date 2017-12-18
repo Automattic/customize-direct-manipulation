@@ -1,14 +1,12 @@
+import $ from 'jquery';
+import _ from 'underscore';
 import getWindow from '../helpers/window';
-import getJQuery from '../helpers/jquery';
 import { on } from '../helpers/messenger';
-import getUnderscore from '../helpers/underscore';
 import addClickHandler from '../helpers/click-handler';
 import getOptions from '../helpers/options';
 import debugFactory from 'debug';
 
-const _ = getUnderscore();
 const debug = debugFactory( 'cdm:icon-buttons' );
-const $ = getJQuery();
 
 // Elements will default to using `editIcon` but if an element has the `icon`
 // property set, it will use that as the key for one of these icons instead:

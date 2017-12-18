@@ -1,8 +1,7 @@
-import getJQuery from '../helpers/jquery';
+import $ from 'jquery';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:focus-callout' );
-const $ = getJQuery();
 
 let timeout;
 

@@ -1,9 +1,8 @@
-import getJQuery from '../helpers/jquery';
+import $ from 'jquery';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:header-focus' );
 const fallbackSelector = '.site-header';
-const $ = getJQuery();
 
 export function getHeaderElements() {
 	return [ getHeaderElement() ];
@@ -12,7 +11,7 @@ export function getHeaderElements() {
 function getHeaderElement() {
 	const selector = getHeaderSelector();
 	const position = ( selector === fallbackSelector ) ? 'top-right' : null;
-	return { id: 'header_image', selector, type: 'header', icon: 'headerIcon', position, title: 'header image', };
+	return { id: 'header_image', selector, type: 'header', icon: 'headerIcon', position, title: 'header image' };
 }
 
 function getHeaderSelector() {
@@ -35,6 +34,6 @@ function getModifiedSelectors() {
 		'img.header-img',
 		'img.headerimage',
 		'img.custom-header',
-		'.featured-header-image a img'
+		'.featured-header-image a img',
 	].map( selector => selector + '[src]:not(\'.site-logo\'):not(\'.wp-post-image\'):not(\'.custom-logo\')' ).join();
 }

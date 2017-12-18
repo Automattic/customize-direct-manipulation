@@ -1,6 +1,6 @@
+import $ from 'jquery';
 import getWindow from './helpers/window';
 import getAPI from './helpers/api';
-import getJQuery from './helpers/jquery';
 import getOptions, { isDisabled } from './helpers/options';
 import { isSafari, isMobileSafari } from './helpers/user-agent';
 import makeFocusable from './modules/focusable';
@@ -11,11 +11,11 @@ import { getMenuElements } from './modules/menu-focus';
 import { getFooterElements } from './modules/footer-focus';
 import { getSiteLogoElements } from './modules/site-logo-focus';
 import debugFactory from 'debug';
+
 const debug = debugFactory( 'cdm:preview' );
 
 const options = getOptions();
 const api = getAPI();
-const $ = getJQuery();
 
 function disableEditShortcuts() {
 	if ( api.selectiveRefresh && api.selectiveRefresh.Partial && api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement ) {

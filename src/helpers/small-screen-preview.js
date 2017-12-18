@@ -1,6 +1,4 @@
-import getJQuery from './jquery';
-
-const $ = getJQuery();
+import $ from 'jquery';
 
 export function isPreviewing() {
 	// Get truth from DOM. Gross.

@@ -1,9 +1,8 @@
+import $ from 'jquery';
 import debugFactory from 'debug';
 import getWindow from '../helpers/window';
-import getJQuery from '../helpers/jquery';
 import { send } from '../helpers/messenger';
 
-const $ = getJQuery();
 const debug = debugFactory( 'cdm:edit-post-links' );
 
 export function modifyEditPostLinks( selector ) {
@@ -13,7 +12,7 @@ export function modifyEditPostLinks( selector ) {
 		getWindow().open( event.target.href );
 		send( 'recordEvent', {
 			name: 'wpcom_customize_direct_manipulation_click',
-			props: { type: 'post-edit' }
+			props: { type: 'post-edit' },
 		} );
 	} );
 }
