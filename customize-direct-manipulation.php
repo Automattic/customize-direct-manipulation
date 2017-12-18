@@ -106,10 +106,10 @@ class Jetpack_Customizer_DM {
 	}
 
 	private function should_show_guide() {
-		// a8c testing
-		if ( function_exists( 'is_automattician' ) && is_automattician() && isset( $_GET['guide'] ) ) {
+		if ( isset( $_GET['guide'] ) ) {
 			return true;
 		}
+
 		// Only to newer users
 		$this_user_id = (int) get_current_user_id();
 		$minimum_user_id = 99855465;
@@ -138,6 +138,8 @@ class Jetpack_Customizer_DM {
 				'button' => __( 'Thanks, got it!' )
 			),
 		);
+
+		$steps = apply_filters( 'customizer_direct_manipulation_steps', $steps );
 
 		$showGuide = $this->should_show_guide();
 		wp_localize_script( 'customize-dm-admin', '_Customizer_DM', compact( 'steps', 'showGuide' ) );
