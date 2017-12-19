@@ -1,11 +1,10 @@
+import $ from 'jquery';
+import debugFactory from 'debug';
 import getAPI from '../helpers/api';
 import { send } from '../helpers/messenger';
-import getJQuery from '../helpers/jquery';
-import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:widgets' );
 const api = getAPI();
-const $ = getJQuery();
 
 export function getWidgetElements() {
 	if ( isShowingDefaultWidgets() ) {
@@ -13,15 +12,15 @@ export function getWidgetElements() {
 		return [];
 	}
 	return getWidgetSelectors()
-	.map( getWidgetsForSelector )
-	.reduce( ( widgets, id ) => widgets.concat( id ), [] ) // flatten the arrays
-	.map( id => ( {
-		id,
-		selector: getWidgetSelectorForId( id ),
-		type: 'widget',
-		handler: makeHandlerForId( id ),
-		title: 'widget',
-	} ) );
+		.map( getWidgetsForSelector )
+		.reduce( ( widgets, id ) => widgets.concat( id ), [] ) // flatten the arrays
+		.map( id => ( {
+			id,
+			selector: getWidgetSelectorForId( id ),
+			type: 'widget',
+			handler: makeHandlerForId( id ),
+			title: 'widget',
+		} ) );
 }
 
 function isShowingDefaultWidgets() {

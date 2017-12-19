@@ -1,4 +1,4 @@
-import getJQ from './jquery';
+import $ from 'jquery';
 
 let animationIsSupported;
 
@@ -17,12 +17,12 @@ export function supportsAnimation() {
 }
 
 export function animateWithClass( selector, className, cb, removeAtEnd ) {
-	const $el = getJQ()( selector );
+	const $el = $( selector );
 
 	$el.addClass( className ).on( 'animationend webkitAnimationEnd', function() {
 		$el.removeClass( className ).off( 'animationend webkitAnimationEnd' );
 
-		if ( getJQ().isFunction( cb ) ) {
+		if ( $.isFunction( cb ) ) {
 			cb.apply( $el );
 		}
 

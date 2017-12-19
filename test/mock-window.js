@@ -3,16 +3,14 @@
  * Simply importing this file will mock the window object and all dependencies
  * for this project.
  */
-
-import getWindow, { setWindow } from '../src/helpers/window';
 import mockHtml from './mock-html';
 import { JSDOM } from 'jsdom';
 
 /**
  * Reset the markup in the DOM to the initial state
  */
-export default function resetMarkup() {
-	getWindow().jQuery( getWindow().document.body ).html( mockHtml );
+export function resetMarkup() {
+	mockWindow.jQuery( mockWindow.document.body ).html( mockHtml );
 }
 
 /**
@@ -26,11 +24,11 @@ function getMockWindow( html ) {
 }
 
 function mockjQuery( mockWindow ) {
-	mockWindow.jQuery = require( 'jquery' )( mockWindow );
+	mockWindow.jQuery = mockWindow.$ = require('jquery');
 }
 
 function mockUnderscore( mockWindow ) {
-	mockWindow._ = require( 'underscore' );
+	mockWindow._ = require('underscore');
 }
 
 function mockCustomizer( mockWindow ) {
@@ -42,9 +40,11 @@ function mockTranslations( mockWindow ) {
 	mockWindow._Customizer_DM = { translations: {} };
 }
 
-const mockWindow = getMockWindow( mockHtml );
+export const mockWindow = global.window = global.self = getMockWindow( mockHtml );
+global.document = mockWindow.document;
 mockjQuery( mockWindow );
 mockUnderscore( mockWindow );
 mockCustomizer( mockWindow );
 mockTranslations( mockWindow );
-setWindow( mockWindow );
+
+export const $ = mockWindow.$;

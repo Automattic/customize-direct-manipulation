@@ -8,7 +8,7 @@ const debug = debugFactory( 'cdm:focus-listener' );
 const eventMap = {
 	'focus-widget-control': 'widget',
 	'focus-menu': 'menu',
-	'focus-menu-location': 'menu'
+	'focus-menu-location': 'menu',
 };
 
 export default function addFocusListener( eventName, getControlCallback ) {
@@ -18,10 +18,10 @@ export default function addFocusListener( eventName, getControlCallback ) {
 function makeHandler( eventName, getControlCallback ) {
 	return function( ...args ) {
 		const eventTargetId = args[ 0 ];
-		debug( `received ${eventName} event for target id ${eventTargetId}` );
+		debug( `received ${ eventName } event for target id ${ eventTargetId }` );
 		const focusableControl = getControlCallback.apply( getControlCallback, args );
 		if ( ! focusableControl ) {
-			debug( `no control found for event ${eventName} and args:`, args );
+			debug( `no control found for event ${ eventName } and args:`, args );
 			return;
 		}
 

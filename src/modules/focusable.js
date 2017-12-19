@@ -1,13 +1,12 @@
+import $ from 'jquery';
 import getWindow from '../helpers/window';
 import getAPI from '../helpers/api';
-import getJQuery from '../helpers/jquery';
 import { send } from '../helpers/messenger';
 import { positionIcon, addClickHandlerToIcon, repositionAfterFontsLoad, enableIconToggle } from '../helpers/icon-buttons';
 import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:focusable' );
 const api = getAPI();
-const $ = getJQuery();
 
 /**
  * Give DOM elements an icon button bound to click handlers
@@ -30,10 +29,10 @@ const $ = getJQuery();
  */
 export default function makeFocusable( elements ) {
 	const elementsWithIcons = elements
-	.reduce( removeDuplicateReducer, [] )
-	.map( positionIcon )
-	.map( createHandler )
-	.map( addClickHandlerToIcon );
+		.reduce( removeDuplicateReducer, [] )
+		.map( positionIcon )
+		.map( createHandler )
+		.map( addClickHandlerToIcon );
 
 	if ( elementsWithIcons.length ) {
 		startIconMonitor( elementsWithIcons );
@@ -67,7 +66,7 @@ function startIconMonitor( elements ) {
 
 	// Reposition icons after the text of any element changes
 	elements.filter( el => [ 'siteTitle', 'headerIcon' ].indexOf( el.type ) !== -1 )
-	.map( el => api( el.id, value => value.bind( makeRepositioner( elements, 'title or header' ) ) ) );
+		.map( el => api( el.id, value => value.bind( makeRepositioner( elements, 'title or header' ) ) ) );
 
 	// Reposition icons after custom-fonts change the elements
 	api( 'jetpack_fonts[selected_fonts]', value => value.bind( makeRepositioner( elements, 'custom-fonts' ) ) );
@@ -111,7 +110,7 @@ function createHandler( element ) {
 
 function removeDuplicateReducer( prev, el ) {
 	if ( prev.map( x => x.id ).indexOf( el.id ) !== -1 ) {
-		debug( `tried to add duplicate element for ${el.id}` );
+		debug( `tried to add duplicate element for ${ el.id }` );
 		return prev;
 	}
 	return prev.concat( el );
@@ -143,7 +142,7 @@ function createPartialUpdateHandler( elements ) {
 		} );
 
 		// Reposition the icons that are associated with the partial containers.
-		if ( elementsToUpdate.length > 0 )  {
+		if ( elementsToUpdate.length > 0 ) {
 			repositionAfterFontsLoad( elementsToUpdate );
 		}
 	};

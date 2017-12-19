@@ -1,12 +1,12 @@
+import $ from 'jquery';
 import { getHtml, getCurrentStep, getTotalSteps, nextStep, isLastStep, getStepPosition } from './guide-steps';
-import getJQ from '../helpers/jquery';
 import { recordEvent } from '../helpers/record-event';
 import { animateWithClass, supportsAnimation } from '../helpers/animate';
 import getOptions from '../helpers/options';
 
 function showGuide() {
-	getJQ()( 'body' ).append( getHtml() );
-	getJQ()( '#dmguide' ).offset( getStepPosition() );
+	$( 'body' ).append( getHtml() );
+	$( '#dmguide' ).offset( getStepPosition() );
 	addEvents();
 
 	if ( supportsAnimation() ) {
@@ -17,13 +17,13 @@ function showGuide() {
 }
 
 function addEvents() {
-	getJQ()( '#dmguide' ).on( 'click.dmguide', '.dmguide-button', maybeGoToNextStep );
-	getJQ()( '#dmguide-overlay' ).on( 'click.dmguide', maybeAllowDismissal );
+	$( '#dmguide' ).on( 'click.dmguide', '.dmguide-button', maybeGoToNextStep );
+	$( '#dmguide-overlay' ).on( 'click.dmguide', maybeAllowDismissal );
 }
 
 function dismiss() {
 	removeGuide();
-	getJQ()( document ).off( '.dmguide' );
+	$( document ).off( '.dmguide' );
 	recordEvent( 'wpcom_customize_guide_dismiss' );
 }
 
@@ -34,22 +34,15 @@ function maybeAllowDismissal() {
 }
 
 function removeGuide() {
-	getJQ()( '#dmguide' ).off( 'click.dmguide' );
-	getJQ()( '#dmguide-overlay' ).off( 'click.dmguide' );
+	$( '#dmguide' ).off( 'click.dmguide' );
+	$( '#dmguide-overlay' ).off( 'click.dmguide' );
 
 	if ( supportsAnimation() ) {
 		animateWithClass( '#dmguide-overlay', 'exiting', function() {
 			this.hide();
 		}, true );
 	} else {
-		getJQ()( '#dmguide-overlay' ).remove();
-	}
-}
-
-function onKeyUp( event ) {
-	// escape key
-	if ( event.which === 27 ) {
-		dismiss();
+		$( '#dmguide-overlay' ).remove();
 	}
 }
 
@@ -59,8 +52,7 @@ function maybeGoToNextStep() {
 	}
 }
 
-
 export default function addGuide( countdown = 2500 ) {
-	countdown = getOptions().steps[0].startDelay || countdown;
+	countdown = getOptions().steps[ 0 ].startDelay || countdown;
 	setTimeout( showGuide, countdown );
 }

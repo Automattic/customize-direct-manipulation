@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import getAPI from './helpers/api';
-import getJQuery from './helpers/jquery';
 import { off, send } from './helpers/messenger';
 import addFocusListener from './modules/focus-listener';
 import { bindPreviewEventsListener } from './helpers/record-event';
@@ -9,7 +9,6 @@ import debugFactory from 'debug';
 
 const debug = debugFactory( 'cdm:admin' );
 const api = getAPI();
-const $ = getJQuery();
 
 // do some focusing
 api.bind( 'ready', () => {
