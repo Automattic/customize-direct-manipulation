@@ -47,6 +47,7 @@ export function addClickHandlerToIcon( element ) {
 	if ( ! element.$icon ) {
 		return element;
 	}
+
 	addClickHandler( `.${ getIconClassName( element.id ) }`, element.handler );
 	return element;
 }

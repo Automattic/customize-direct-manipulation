@@ -20,6 +20,7 @@ function makeHandler( eventName, getControlCallback ) {
 		const eventTargetId = args[ 0 ];
 		debug( `received ${ eventName } event for target id ${ eventTargetId }` );
 		const focusableControl = getControlCallback.apply( getControlCallback, args );
+
 		if ( ! focusableControl ) {
 			debug( `no control found for event ${ eventName } and args:`, args );
 			return;
