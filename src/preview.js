@@ -6,7 +6,6 @@ import { isSafari, isMobileSafari } from './helpers/user-agent';
 import makeFocusable from './modules/focusable';
 import { modifyEditPostLinks, disableEditPostLinks } from './modules/edit-post-links';
 import { getHeaderElements } from './modules/header-focus';
-import { getWidgetElements } from './modules/widget-focus';
 import { getMenuElements } from './modules/menu-focus';
 import { getFooterElements } from './modules/footer-focus';
 import { getSiteLogoElements } from './modules/site-logo-focus';
@@ -20,7 +19,15 @@ const api = getAPI();
 function disableEditShortcuts() {
 	if ( api.selectiveRefresh && api.selectiveRefresh.Partial && api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement ) {
 		debug( 'disabling edit shortcuts' );
-		api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement = function() {};
+
+		// This is crude but necessary to fix the broken widget shortcuts that broke when block widgets were introduced
+		// We effectively skip overriding/disabling the default shortcut for widget partials
+		const createEditShortcutForPlacement = api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement;
+		api.selectiveRefresh.Partial.prototype.createEditShortcutForPlacement = function( ...args ) {
+			if ( args[ 0 ] && args[ 0 ].partial && args[ 0 ].partial.id.startsWith( 'widget' ) ) {
+				createEditShortcutForPlacement.apply( this, args );
+			}
+		};
 	} else {
 		debug( 'no edit shortcuts support detected' );
 	}
@@ -33,11 +40,11 @@ function startDirectManipulation() {
 		{ id: 'blogname', selector: '.site-title, #site-title', type: 'siteTitle', position: 'middle', title: 'site title' },
 	];
 	const headers = ! options.headerImageSupport ? [] : getHeaderElements();
-	const widgets = isDisabled( 'widget-focus' ) ? [] : getWidgetElements();
 	const menus = isDisabled( 'menu-focus' ) ? [] : getMenuElements();
 	const footers = isDisabled( 'footer-focus' ) ? [] : getFooterElements();
 	const siteLogo = isDisabled( 'site-logo-focus' ) ? [] : getSiteLogoElements();
-	makeFocusable( basicElements.concat( headers, widgets, menus, footers, siteLogo ) );
+
+	makeFocusable( basicElements.concat( headers, menus, footers, siteLogo ) );
 
 	if ( ! isDisabled( 'edit-post-links' ) ) {
 		if ( isSafari() && ! isMobileSafari() ) {
