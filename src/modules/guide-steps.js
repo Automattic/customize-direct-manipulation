@@ -61,7 +61,16 @@ export function getStepHtml() {
 }
 
 export function getStepPosition() {
-	const { styleTop, styleLeft } = getCurrentStepData();
+	const { styleTop, styleLeft, elementId } = getCurrentStepData();
+	if ( elementId ) {
+		const guideElement = document.getElementById( elementId );
+		if ( guideElement ) {
+			const guidePosition = guideElement.getBoundingClientRect();
+			const offset = window.innerWidth < 601 ? 40 : -10;
+			return { top: ( guidePosition.top + offset ), left: styleLeft || 307 };
+		}
+	}
+
 	return { top: styleTop || 97, left: styleLeft || 307 };
 }
 
