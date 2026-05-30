@@ -32,7 +32,7 @@
     "eslint-config-wpcalypso": "^1.2.0",
     "eslint-plugin-wpcalypso": "^4.0.1",
     "jquery": "^3.2.1",
-    "jsdom": "^11.5.1",
+    "jsdom": "^29.1.1",
     "mocha": "^4.0.1",
     "rollup": "^0.52.2",
     "rollup-plugin-babel": "^3.0.2",
